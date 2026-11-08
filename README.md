@@ -18,5 +18,9 @@ Open `index.html` in a modern browser. Internet access is needed for external st
 ## Important
 This is a frontend-only prototype. It has no backend, database, admin panel, live availability, booking persistence, payment processing, CMS or automated email. Enquiry forms open WhatsApp and do not save submissions. Package durations and descriptions are sample content; verify tour operations and details before publishing. Reviews are placeholders, not real testimonials. Images are illustrative stock photos and should be replaced with approved business and property photos.
 
-## GitHub Pages
-A workflow is included at `.github/workflows/pages.yml`. In the repository, open **Settings → Pages** and set **Build and deployment → Source** to **GitHub Actions**. The workflow will then publish the website on pushes to `main`.
+## Publish with GitHub Pages
+
+1. Open repository **Settings → Pages**.
+2. Under **Build and deployment**, set **Source** to **Deploy from a branch**.
+3. Select branch **main** and folder **/ (root)**, then click **Save**.
+4. Wait for GitHub Pages to finish publishing. The site URL will be `https://xumair604-crypto.github.io/discover-pakistan-tourism/`.
