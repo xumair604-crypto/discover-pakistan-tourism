@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Admin | Discover Pakistan Tourism</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='31' fill='%230d2f27'/%3E%3Ctext x='32' y='41' font-family='Georgia,serif' font-size='26' font-weight='700' fill='%23d4ae62' text-anchor='middle'%3EDP%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.0/dist/umd/supabase.js"></script>
+<script src="config.js"></script>
+<style>
+:root{
+  --bg:#f3f5f2;--surface:#ffffff;--surface2:#eaeee9;--text:#13241f;--muted:#55645d;--line:#dbe1da;
+  --brand:#0d2f27;--brand2:#14453a;--on-brand:#eef3ef;--on-brand-muted:#b9c9c1;
+  --accent:#d4ae62;--accent-ink:#1d1606;--accent-text:#8a6a2a;--danger:#b3261e;
+  --radius:12px;--shadow:0 12px 34px rgb(13 47 39 / .10);
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#0b1613;--surface:#11201c;--surface2:#172925;--text:#e7eee9;--muted:#9db0a6;--line:#24382f;
+  --brand:#0a221c;--brand2:#123a31;--accent-text:#e0bf7a;--danger:#f2867d;--shadow:0 12px 34px rgb(0 0 0 / .35);
+}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:400 15px/1.55 "DM Sans",system-ui,sans-serif}
+h1,h2,h3{font-family:"Playfair Display",Georgia,serif;font-weight:600;margin:0;line-height:1.2}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+[hidden]{display:none!important}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+i.ph{font-size:1.15em;line-height:0;vertical-align:-.15em}
+.btn{display:inline-flex;align-items:center;gap:7px;border:1px solid transparent;border-radius:999px;padding:9px 16px;font-weight:700;font-size:14px;text-decoration:none;white-space:nowrap;background:none}
+.btn:active{transform:scale(.98)}
+.btn-brand{background:var(--brand);color:var(--on-brand)}
+.btn-brand:hover{background:var(--brand2)}
+.btn-accent{background:var(--accent);color:var(--accent-ink)}
+.btn-line{border-color:var(--line);background:var(--surface)}
+.btn-line:hover{border-color:var(--text)}
+.btn-danger{border-color:var(--danger);color:var(--danger);background:var(--surface)}
+.btn-danger.armed{background:var(--danger);color:#fff}
+.btn-wa{background:#1d9e5c;color:#fff}
+.btn:disabled{opacity:.6;cursor:default}
+.field{display:flex;flex-direction:column;gap:5px}
+.field label{font-size:13px;font-weight:600;color:var(--muted)}
+.field input,.field select,.field textarea{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:9px 11px;font-size:15px;width:100%;outline:none}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent)}
+.field small{font-size:12.5px;color:var(--muted)}
+.check{display:flex;gap:8px;align-items:center;font-weight:600;font-size:14.5px}
+.msg{font-size:14px;padding:10px 12px;border-radius:10px;background:var(--surface2)}
+.msg.error{color:var(--danger)}
+
+/* Auth screens */
+.center{min-height:100dvh;display:grid;place-items:center;padding:24px}
+.card{width:min(420px,100%);background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:28px;box-shadow:var(--shadow);display:grid;gap:14px}
+.card.wide{width:min(720px,100%)}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo{width:40px;height:40px;border-radius:50%;border:1.5px solid var(--accent);display:grid;place-items:center;color:var(--accent);font:700 16px "Playfair Display",serif;background:var(--brand);flex:none}
+.brand b{display:block;font:700 14px "Playfair Display",serif;letter-spacing:.03em}
+.brand small{display:block;font-size:11px;letter-spacing:.12em;font-weight:600;color:var(--accent-text)}
+.card ol{margin:0;padding-left:20px;display:grid;gap:6px}
+.card code{background:var(--surface2);padding:1px 6px;border-radius:6px;font-size:13.5px}
+.linkish{background:none;border:0;padding:0;color:var(--accent-text);font-weight:600;text-decoration:underline;justify-self:start}
+
+/* App shell */
+header.top{position:sticky;top:0;z-index:20;background:var(--brand);color:var(--on-brand)}
+.topin{max-width:1280px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.top .brand small{color:var(--accent)}
+.tabs{display:flex;gap:4px;flex-wrap:wrap;flex:1}
+.tab{border:0;background:none;color:var(--on-brand-muted);padding:8px 12px;border-radius:999px;font-weight:600;font-size:14px;display:inline-flex;gap:6px;align-items:center}
+.tab[aria-selected="true"]{background:rgb(255 255 255 / .12);color:#fff}
+.who{display:flex;gap:10px;align-items:center;font-size:13px;color:var(--on-brand-muted)}
+.who .btn{color:var(--on-brand);border-color:rgb(255 255 255 / .3)}
+main{max-width:1280px;margin:0 auto;padding:22px 16px 60px}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.head h1{font-size:28px}
+.head p{color:var(--muted);margin:4px 0 0}
+.stats{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;margin-bottom:16px}
+.stat{border:1px solid var(--line);background:var(--surface);border-radius:var(--radius);padding:12px 14px;text-align:left}
+.stat[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.stat b{display:block;font-size:24px;line-height:1.1}
+.stat span{font-size:12.5px;color:var(--muted);font-weight:600}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.toolbar input,.toolbar select{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:8px 14px;font-size:14px;outline:none}
+.toolbar input{min-width:240px;flex:1;max-width:380px}
+.spacer{flex:1}
+.tableWrap{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:auto}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;font-size:12.5px;color:var(--muted);font-weight:700;padding:11px 12px;border-bottom:1px solid var(--line);white-space:nowrap;background:var(--surface2)}
+td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+tbody tr{cursor:pointer}
+tbody tr:hover{background:var(--surface2)}
+tbody tr:last-child td{border-bottom:0}
+td.mono{font-variant-numeric:tabular-nums;white-space:nowrap}
+.ref{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.status{display:inline-block;font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap;border:1px solid transparent}
+.s-new{background:#d4ae62;color:#1d1606}
+.s-contacted{background:#dbe7f5;color:#1f3b63}
+.s-quoted{background:#efe2fb;color:#4b2370}
+.s-confirmed{background:#d6f0de;color:#13522b}
+.s-completed{background:var(--surface2);color:var(--muted);border-color:var(--line)}
+.s-cancelled{background:#f9dedc;color:#8c1d18}
+.empty{padding:40px;text-align:center;color:var(--muted)}
+.pub{font-size:12px;font-weight:700;color:var(--muted)}
+.pub.on{color:#1d9e5c}
+.thumb{width:64px;height:44px;object-fit:cover;border-radius:6px;background:var(--surface2);display:block}
+
+/* Dialogs */
+dialog{border:0;padding:0;border-radius:16px;width:min(760px,calc(100% - 20px));max-height:calc(100dvh - 24px);background:var(--surface);color:var(--text);box-shadow:0 30px 80px rgb(0 0 0 / .35)}
+dialog::backdrop{background:rgb(5 20 16 / .65)}
+.dlg{padding:22px;overflow:auto;max-height:calc(100dvh - 24px)}
+.dlgHead{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:14px}
+.dlgHead h2{font-size:24px}
+.close{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--surface2);display:grid;place-items:center;flex:none}
+.facts{display:grid;grid-template-columns:repeat(2,1fr);gap:10px 18px;margin:0 0 16px;padding:14px;border-radius:var(--radius);background:var(--surface2)}
+.facts div{min-width:0}
+.facts dt{font-size:12px;font-weight:700;color:var(--muted)}
+.facts dd{margin:0;overflow-wrap:anywhere}
+.facts .full{grid-column:span 2}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.span2{grid-column:span 2}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;align-items:center}
+.preview{max-width:220px;border-radius:8px;margin-top:6px}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);z-index:100;background:var(--brand);color:var(--on-brand);border-radius:12px;padding:12px 16px;box-shadow:var(--shadow);font-size:14.5px}
+.toast.error{background:var(--danger);color:#fff}
+
+@media (max-width:980px){.stats{grid-template-columns:repeat(4,1fr)}}
+@media (max-width:700px){
+  .stats{grid-template-columns:repeat(3,1fr)}
+  .grid2,.facts{grid-template-columns:1fr}
+  .span2,.facts .full{grid-column:auto}
+  .toolbar input{min-width:0;max-width:none;width:100%}
+  table.cards thead{display:none}
+  table.cards tr{display:grid;grid-template-columns:1fr auto;gap:2px 10px;padding:12px;border-bottom:1px solid var(--line)}
+  table.cards td{border:0;padding:0}
+  table.cards td[data-hide-sm]{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- Setup needed -->
+<div class="center" id="viewSetup" hidden>
+  <div class="card wide">
+    <a class="brand" href="./"><span class="logo">DP</span><span><b>DISCOVER PAKISTAN</b><small>ADMIN</small></span></a>
+    <h1 style="font-size:26px">Connect the database first</h1>
+    <p>This admin page needs Supabase settings in <code>config.js</code>. Follow the steps in the README:</p>
+    <ol>
+      <li>Create a free project at supabase.com.</li>
+      <li>In the SQL Editor, run <code>supabase/schema.sql</code>, then <code>supabase/seed.sql</code>.</li>
+      <li>Add each owner: Authentication, Users, Add user. Then add their email to the <code>admins</code> table.</li>
+      <li>Paste the Project URL and the anon public key into <code>config.js</code>.</li>
+    </ol>
+  </div>
+</div>
+
+<!-- Login -->
+<div class="center" id="viewLogin" hidden>
+  <form class="card" id="loginForm">
+    <a class="brand" href="./"><span class="logo">DP</span><span><b>DISCOVER PAKISTAN</b><small>ADMIN</small></span></a>
+    <h1 style="font-size:26px">Owner sign in</h1>
+    <div class="field"><label for="lEmail">Email</label><input id="lEmail" type="email" autocomplete="username" required></div>
+    <div class="field"><label for="lPass">Password</label><input id="lPass" type="password" autocomplete="current-password" required></div>
+    <div class="msg error" id="loginMsg" hidden></div>
+    <button class="btn btn-brand" type="submit" style="justify-content:center"><i class="ph ph-sign-in"></i>Sign in</button>
+    <button class="linkish" type="button" id="forgotBtn">Forgot password?</button>
+  </form>
+</div>
+
+<!-- Set a new password (after reset email) -->
+<div class="center" id="viewReset" hidden>
+  <form class="card" id="resetForm">
+    <h1 style="font-size:24px">Choose a new password</h1>
+    <div class="field"><label for="rPass">New password</label><input id="rPass" type="password" autocomplete="new-password" minlength="8" required><small>At least 8 characters.</small></div>
+    <div class="msg error" id="resetMsg" hidden></div>
+    <button class="btn btn-brand" type="submit" style="justify-content:center">Save password</button>
+  </form>
+</div>
+
+<!-- Not an owner -->
+<div class="center" id="viewDenied" hidden>
+  <div class="card">
+    <h1 style="font-size:24px">No admin access</h1>
+    <p id="deniedText">This account is not on the owners list. Ask an owner to add your email to the admins table.</p>
+    <button class="btn btn-line" type="button" data-signout style="justify-self:start">Sign out</button>
+  </div>
+</div>
+
+<!-- App -->
+<div id="viewApp" hidden>
+  <header class="top">
+    <div class="topin">
+      <a class="brand" href="./" target="_blank" rel="noopener" title="Open the website"><span class="logo">DP</span><span><b>DISCOVER PAKISTAN</b><small>ADMIN</small></span></a>
+      <nav class="tabs" role="tablist" aria-label="Sections">
+        <button class="tab" role="tab" data-view="bookings" aria-selected="true"><i class="ph ph-tray"></i>Bookings</button>
+        <button class="tab" role="tab" data-view="tours" aria-selected="false"><i class="ph ph-map-trifold"></i>Tours</button>
+        <button class="tab" role="tab" data-view="offers" aria-selected="false"><i class="ph ph-seal-percent"></i>Offers</button>
+        <button class="tab" role="tab" data-view="hotels" aria-selected="false"><i class="ph ph-buildings"></i>Hotels</button>
+        <button class="tab" role="tab" data-view="venues" aria-selected="false"><i class="ph ph-bowl-food"></i>Buffet venues</button>
+      </nav>
+      <div class="who"><span id="whoEmail"></span><button class="btn btn-line" type="button" data-signout>Sign out</button></div>
+    </div>
+  </header>
+
+  <main>
+    <section id="secBookings">
+      <div class="head">
+        <div><h1>Bookings and enquiries</h1><p>Everything sent from the website's enquiry forms and trip builder.</p></div>
+        <div class="actions" style="margin:0">
+          <button class="btn btn-line" type="button" id="refreshBtn"><i class="ph ph-arrows-clockwise"></i>Refresh</button>
+          <button class="btn btn-line" type="button" id="csvBtn"><i class="ph ph-download-simple"></i>Export CSV</button>
+        </div>
+      </div>
+      <div class="stats" id="stats"></div>
+      <div class="toolbar">
+        <label class="sr" for="bSearch" hidden>Search</label>
+        <input id="bSearch" type="search" placeholder="Search name, phone, reference, place">
+        <select id="bService" aria-label="Filter by service"><option value="">All services</option></select>
+        <span class="spacer"></span>
+        <span id="bCount" style="font-size:13px;color:var(--muted)"></span>
+      </div>
+      <div class="tableWrap">
+        <table class="cards">
+          <thead><tr><th>Received</th><th>Reference</th><th>Name</th><th>Phone</th><th>Service</th><th>Destination</th><th>Travel date</th><th>Guests</th><th>Status</th></tr></thead>
+          <tbody id="bRows"></tbody>
+        </table>
+        <div class="empty" id="bEmpty" hidden>No bookings match.</div>
+      </div>
+    </section>
+
+    <section id="secContent" hidden>
+      <div class="head">
+        <div><h1 id="cTitle"></h1><p id="cHelp"></p></div>
+        <button class="btn btn-brand" type="button" id="cAdd"><i class="ph ph-plus"></i><span id="cAddLabel">Add</span></button>
+      </div>
+      <div class="tableWrap">
+        <table>
+          <thead id="cHead"></thead>
+          <tbody id="cRows"></tbody>
+        </table>
+        <div class="empty" id="cEmpty" hidden>Nothing here yet.</div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<dialog id="bookingDlg" aria-labelledby="bkTitle"><div class="dlg" id="bookingBody"></div></dialog>
+<dialog id="editDlg" aria-labelledby="edTitle"><form class="dlg" id="editForm" novalidate></form></dialog>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script>
+const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const CFG = window.DP_CONFIG || {};
+const STATUSES = [["new","New"],["contacted","Contacted"],["quoted","Quoted"],["confirmed","Confirmed"],["completed","Completed"],["cancelled","Cancelled"]];
+const STATUS_LABEL = Object.fromEntries(STATUSES);
+const REGIONS = ["Murree & Galiyat","Hazara & Kaghan","Kashmir","Swat","Gilgit-Baltistan","City tours"];
+let sb = null, bookings = [], statusFilter = "", currentEntity = null, contentRows = [];
+
+function show(view){ ["viewSetup","viewLogin","viewReset","viewDenied","viewApp"].forEach(v => $("#" + v).hidden = v !== view); }
+let toastTimer;
+function toast(text, isError){ const t = $("#toast"); t.textContent = text; t.className = "toast" + (isError ? " error" : ""); t.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(() => t.hidden = true, 3500); }
+const fmtDate = d => d ? new Date(d.length === 10 ? d + "T00:00:00" : d).toLocaleDateString("en-GB", {day:"numeric", month:"short", year:"numeric"}) : "";
+const fmtTime = d => d ? new Date(d).toLocaleString("en-GB", {day:"numeric", month:"short", hour:"2-digit", minute:"2-digit"}) : "";
+function waNumber(phone){
+  let n = String(phone || "").replace(/\D/g, "");
+  if (n.startsWith("00")) n = n.slice(2);
+  if (n.startsWith("0")) n = "92" + n.slice(1);
+  return n;
+}
+
+/* ---------- Auth ---------- */
+async function start(){
+  if (!CFG.supabaseUrl || !CFG.supabaseAnonKey || !window.supabase) return show("viewSetup");
+  sb = window.supabase.createClient(CFG.supabaseUrl, CFG.supabaseAnonKey);
+  sb.auth.onAuthStateChange((event) => { if (event === "PASSWORD_RECOVERY") show("viewReset"); });
+  if (/type=recovery/.test(location.hash)) return show("viewReset");
+  const { data } = await sb.auth.getSession();
+  data.session ? enter(data.session) : show("viewLogin");
+}
+async function enter(session){
+  const { data: isAdmin, error } = await sb.rpc("is_admin");
+  if (error || !isAdmin) { $("#deniedText").textContent = error ? "Could not check access: " + error.message : `${session.user.email} is not on the owners list. Ask an owner to add this email to the admins table.`; return show("viewDenied"); }
+  $("#whoEmail").textContent = session.user.email;
+  show("viewApp");
+  openView("bookings");
+}
+$("#loginForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const btn = e.submitter; btn.disabled = true; $("#loginMsg").hidden = true;
+  const { data, error } = await sb.auth.signInWithPassword({ email: $("#lEmail").value.trim(), password: $("#lPass").value });
+  btn.disabled = false;
+  if (error) { $("#loginMsg").textContent = error.message; $("#loginMsg").hidden = false; return; }
+  $("#lPass").value = "";
+  enter(data.session);
+});
+$("#forgotBtn").addEventListener("click", async () => {
+  const email = $("#lEmail").value.trim();
+  const m = $("#loginMsg");
+  if (!email) { m.textContent = "Type your email above first."; m.hidden = false; return; }
+  const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: location.href.split("#")[0] });
+  m.textContent = error ? error.message : "If that email is registered, a reset link is on its way.";
+  m.className = "msg" + (error ? " error" : ""); m.hidden = false;
+});
+$("#resetForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const { error } = await sb.auth.updateUser({ password: $("#rPass").value });
+  if (error) { $("#resetMsg").textContent = error.message; $("#resetMsg").hidden = false; return; }
+  $("#rPass").value = ""; history.replaceState(null, "", location.pathname);
+  toast("Password saved");
+  const { data } = await sb.auth.getSession();
+  data.session ? enter(data.session) : show("viewLogin");
+});
+document.addEventListener("click", async e => {
+  if (!e.target.closest("[data-signout]")) return;
+  await sb.auth.signOut(); bookings = []; show("viewLogin");
+});
+
+/* ---------- Navigation ---------- */
+function openView(view){
+  $$(".tab").forEach(t => t.setAttribute("aria-selected", String(t.dataset.view === view)));
+  $("#secBookings").hidden = view !== "bookings";
+  $("#secContent").hidden = view === "bookings";
+  if (view === "bookings") loadBookings(); else openEntity(view);
+}
+$$(".tab").forEach(t => t.addEventListener("click", () => openView(t.dataset.view)));
+
+/* ---------- Bookings ---------- */
+async function loadBookings(){
+  const { data, error } = await sb.from("bookings").select("*").order("created_at", { ascending: false }).limit(1000);
+  if (error) return toast("Could not load bookings: " + error.message, true);
+  bookings = data;
+  const services = [...new Set(bookings.map(b => b.service).filter(Boolean))].sort();
+  const sel = $("#bService"), cur = sel.value;
+  sel.innerHTML = `<option value="">All services</option>` + services.map(s => `<option>${esc(s)}</option>`).join("");
+  sel.value = services.includes(cur) ? cur : "";
+  renderBookings();
+}
+function filteredBookings(){
+  const q = $("#bSearch").value.trim().toLowerCase(), svc = $("#bService").value;
+  const qDigits = /\d{3,}/.test(q) ? waNumber(q).replace(/^92/, "") : "";
+  return bookings.filter(b => (!statusFilter || b.status === statusFilter) && (!svc || b.service === svc) &&
+    (!q || [b.ref, b.name, b.phone, b.email, b.destination, b.service, b.message, b.travelling_from, JSON.stringify(b.details || {})].join(" ").toLowerCase().includes(q)
+        || (qDigits && waNumber(b.phone).includes(qDigits))));
+}
+function renderBookings(){
+  const counts = Object.fromEntries(STATUSES.map(([k]) => [k, 0]));
+  bookings.forEach(b => counts[b.status] = (counts[b.status] || 0) + 1);
+  $("#stats").innerHTML = `<button class="stat" type="button" data-status="" aria-pressed="${!statusFilter}"><b>${bookings.length}</b><span>All</span></button>` +
+    STATUSES.map(([k, l]) => `<button class="stat" type="button" data-status="${k}" aria-pressed="${statusFilter === k}"><b>${counts[k]}</b><span>${l}</span></button>`).join("");
+  const rows = filteredBookings();
+  $("#bCount").textContent = `${rows.length} shown`;
+  $("#bEmpty").hidden = rows.length > 0;
+  $("#bRows").innerHTML = rows.map(b => `<tr data-id="${b.id}" tabindex="0">
+    <td class="mono" data-hide-sm>${esc(fmtTime(b.created_at))}</td>
+    <td class="ref">${esc(b.ref)}</td>
+    <td><b>${esc(b.name)}</b></td>
+    <td class="mono">${esc(b.phone)}</td>
+    <td data-hide-sm>${esc(b.service)}</td>
+    <td data-hide-sm>${esc(b.destination)}</td>
+    <td class="mono">${esc(fmtDate(b.travel_date))}</td>
+    <td data-hide-sm>${esc(b.guests)}</td>
+    <td><span class="status s-${esc(b.status)}">${esc(STATUS_LABEL[b.status] || b.status)}</span></td></tr>`).join("");
+}
+$("#stats").addEventListener("click", e => { const s = e.target.closest(".stat"); if (!s) return; statusFilter = s.dataset.status; renderBookings(); });
+$("#bSearch").addEventListener("input", renderBookings);
+$("#bService").addEventListener("change", renderBookings);
+$("#refreshBtn").addEventListener("click", loadBookings);
+$("#bRows").addEventListener("click", e => { const tr = e.target.closest("tr"); if (tr) openBooking(tr.dataset.id); });
+$("#bRows").addEventListener("keydown", e => { if (e.key === "Enter") { const tr = e.target.closest("tr"); if (tr) openBooking(tr.dataset.id); } });
+
+const DETAIL_LABELS = { start: "Starting city", style: "Trip style", transport: "Transport", hotels: "Hotels", places: "Places", meals: "Meals", days: "Days" };
+function openBooking(id){
+  const b = bookings.find(x => x.id === id); if (!b) return;
+  const d = b.details || {};
+  const fact = (label, value, full) => value ? `<div class="${full ? "full" : ""}"><dt>${label}</dt><dd>${esc(value)}</dd></div>` : "";
+  const extra = Object.entries(d).filter(([, v]) => v && (!Array.isArray(v) || v.length)).map(([k, v]) => fact(esc(DETAIL_LABELS[k] || k), Array.isArray(v) ? v.join(", ") : v, k === "places")).join("");
+  const wa = waNumber(b.phone);
+  const waText = encodeURIComponent(`Assalam o Alaikum ${b.name}, thank you for your enquiry with Discover Pakistan Tourism (reference ${b.ref}).`);
+  $("#bookingBody").innerHTML = `
+    <div class="dlgHead"><div><p style="margin:0;color:var(--muted);font-size:13px">${esc(b.ref)}, received ${esc(fmtTime(b.created_at))}${b.source === "trip_builder" ? ", trip builder" : ""}</p><h2 id="bkTitle">${esc(b.name)}</h2></div><button class="close" type="button" data-close aria-label="Close"><i class="ph ph-x"></i></button></div>
+    <dl class="facts">
+      ${fact("Phone", b.phone)}${fact("Email", b.email)}${fact("Service", b.service)}${fact("Guests", b.guests)}
+      ${fact("Travel date", fmtDate(b.travel_date))}${fact("Travelling from", b.travelling_from)}
+      ${fact("Destination", b.destination, true)}${extra}${fact("Message", b.message, true)}
+    </dl>
+    <form id="bkForm" class="grid2">
+      <div class="field"><label for="bkStatus">Status</label><select id="bkStatus">${STATUSES.map(([k, l]) => `<option value="${k}" ${b.status === k ? "selected" : ""}>${l}</option>`).join("")}</select></div>
+      <div class="field"><label for="bkRate">Rate quoted (private)</label><input id="bkRate" maxlength="200" value="${esc(b.quoted_rate)}" placeholder="For example PKR 45,000 per person"></div>
+      <div class="field span2"><label for="bkNotes">Private notes</label><textarea id="bkNotes" rows="4" maxlength="5000">${esc(b.admin_notes)}</textarea><small>Only owners can see the rate and notes. Customers never see them.</small></div>
+    </form>
+    <div class="actions">
+      <button class="btn btn-brand" type="button" id="bkSave"><i class="ph ph-floppy-disk"></i>Save</button>
+      ${wa ? `<a class="btn btn-wa" href="https://wa.me/${wa}?text=${waText}" target="_blank" rel="noopener"><i class="ph ph-whatsapp-logo"></i>WhatsApp</a>` : ""}
+      <a class="btn btn-line" href="tel:${esc(b.phone)}"><i class="ph ph-phone"></i>Call</a>
+      ${b.email ? `<a class="btn btn-line" href="mailto:${esc(b.email)}?subject=${encodeURIComponent("Your trip with Discover Pakistan Tourism (" + b.ref + ")")}"><i class="ph ph-envelope-simple"></i>Email</a>` : ""}
+      <span class="spacer"></span>
+      <button class="btn btn-danger" type="button" id="bkDelete"><i class="ph ph-trash"></i>Delete</button>
+    </div>`;
+  $("#bkSave").onclick = async () => {
+    const patch = { status: $("#bkStatus").value, quoted_rate: $("#bkRate").value.trim() || null, admin_notes: $("#bkNotes").value.trim() || null };
+    const { error } = await sb.from("bookings").update(patch).eq("id", b.id);
+    if (error) return toast("Not saved: " + error.message, true);
+    Object.assign(b, patch); renderBookings(); $("#bookingDlg").close(); toast(`${b.ref} saved`);
+  };
+  armDelete($("#bkDelete"), async () => {
+    const { error } = await sb.from("bookings").delete().eq("id", b.id);
+    if (error) return toast("Not deleted: " + error.message, true);
+    bookings = bookings.filter(x => x.id !== b.id); renderBookings(); $("#bookingDlg").close(); toast(`${b.ref} deleted`);
+  });
+  $("#bookingDlg").showModal();
+}
+/* Two-step delete: first click arms the button, second click deletes. */
+function armDelete(btn, action){
+  let timer;
+  btn.onclick = () => {
+    if (!btn.classList.contains("armed")) {
+      btn.classList.add("armed"); btn.innerHTML = '<i class="ph ph-warning"></i>Click again to delete';
+      timer = setTimeout(() => { btn.classList.remove("armed"); btn.innerHTML = '<i class="ph ph-trash"></i>Delete'; }, 4000);
+      return;
+    }
+    clearTimeout(timer); action();
+  };
+}
+$("#csvBtn").addEventListener("click", () => {
+  const cols = ["ref","created_at","status","name","phone","email","service","destination","travel_date","guests","travelling_from","message","quoted_rate","admin_notes","details"];
+  const cell = v => { v = v == null ? "" : typeof v === "object" ? JSON.stringify(v) : String(v); if (/^[=+\-@]/.test(v)) v = "'" + v; return '"' + v.replace(/"/g, '""') + '"'; };
+  const csv = [cols.join(","), ...filteredBookings().map(b => cols.map(c => cell(b[c])).join(","))].join("\r\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob(["﻿" + csv], { type: "text/csv;charset=utf-8" }));
+  a.download = `bookings-${new Date().toISOString().slice(0, 10)}.csv`; a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+});
+
+/* ---------- Website content ---------- */
+const ICONS = [["buildings","Building"],["star","Star (our own)"],["tree-evergreen","Trees"],["mountains","Mountains"],["house-line","House"],["bed","Bed"]];
+const ENTITIES = {
+  tours: {
+    table: "tours", key: "id", label: "tour", title: "Tours", help: "Tours shown on the website, in the order of the Sort number (lowest first).",
+    cols: [["", r => `<img class="thumb" src="${esc(r.img)}" alt="" loading="lazy">`], ["Tour", r => `<b>${esc(r.title)}</b>`], ["Region", r => esc(r.region)], ["Length", r => esc(r.days)], ["Sort", r => r.sort], ["On website", pubCell]],
+    fields: [
+      { k: "title", label: "Tour title", type: "text", req: true, span: 2 },
+      { k: "id", label: "Short ID", type: "slug", req: true, createOnly: true, help: "Lowercase letters, numbers and dashes, for example swat-kalam. Cannot be changed later." },
+      { k: "region", label: "Region (website filter)", type: "select", options: REGIONS.map(r => [r, r]) },
+      { k: "length", label: "Length group", type: "select", def: "short", options: [["day","Day trip"],["short","2-4 days"],["long","5 days or more"]] },
+      { k: "days", label: "Duration shown", type: "text", placeholder: "4 days" },
+      { k: "summary", label: "Short summary", type: "textarea", span: 2 },
+      { k: "season", label: "Best time", type: "text", placeholder: "April to October" },
+      { k: "start_from", label: "Starts from", type: "text", placeholder: "Islamabad" },
+      { k: "img", label: "Photo link (https://...)", type: "url", span: 2, help: "Paste a direct image link. A preview appears below." },
+      { k: "alt", label: "Photo description (for blind visitors and Google)", type: "text", span: 2 },
+      { k: "plan", label: "Day-by-day plan", type: "plan", span: 2, help: "One line per day, like:  Day 1 | Drive to Naran through Balakot" },
+      { k: "incl", label: "Included (one per line)", type: "lines" },
+      { k: "excl", label: "Not included (one per line)", type: "lines" },
+      { k: "note", label: "Important note (optional)", type: "textarea", span: 2 },
+      { k: "sort", label: "Sort number", type: "number", def: 100 },
+      { k: "published", label: "Show on website", type: "check", def: true }
+    ]
+  },
+  offers: {
+    table: "offers", key: "id", label: "offer", title: "Special offers", help: "The first offer fills the gold offers banner. Turn off an offer to hide it.",
+    cols: [["Offer", r => `<b>${esc(r.title)}</b>`], ["Text", r => esc(r.body)], ["Sort", r => r.sort], ["On website", pubCell]],
+    fields: [
+      { k: "title", label: "Offer title", type: "text", req: true, span: 2 },
+      { k: "body", label: "Offer text (no prices needed)", type: "textarea", span: 2 },
+      { k: "sort", label: "Sort number", type: "number", def: 100 },
+      { k: "published", label: "Show on website", type: "check", def: true }
+    ]
+  },
+  hotels: {
+    table: "hotels", key: "id", label: "hotel", title: "Hotels we book", help: "The hotel list in the Hotels section of the website.",
+    cols: [["Hotel", r => `<b>${esc(r.name)}</b>`], ["Details", r => esc(r.details)], ["Sort", r => r.sort], ["On website", pubCell]],
+    fields: [
+      { k: "name", label: "Hotel name", type: "text", req: true, span: 2 },
+      { k: "details", label: "Place and details", type: "text", span: 2, placeholder: "Bank Road, Murree. Partner hotel" },
+      { k: "icon", label: "Icon", type: "select", options: ICONS },
+      { k: "sort", label: "Sort number", type: "number", def: 100 },
+      { k: "published", label: "Show on website", type: "check", def: true }
+    ]
+  },
+  venues: {
+    table: "venues", key: "id", label: "venue", title: "Buffet and meal venues", help: "Shown in the Group meals and buffets section.",
+    cols: [["Venue", r => `<b>${esc(r.name)}</b>`], ["Details", r => esc(r.details)], ["Sort", r => r.sort], ["On website", pubCell]],
+    fields: [
+      { k: "name", label: "Venue name", type: "text", req: true, span: 2 },
+      { k: "details", label: "What you offer there", type: "text", span: 2, placeholder: "Breakfast, hi-tea, lunch and dinner buffets" },
+      { k: "sort", label: "Sort number", type: "number", def: 100 },
+      { k: "published", label: "Show on website", type: "check", def: true }
+    ]
+  }
+};
+function pubCell(r){ return `<span class="pub ${r.published ? "on" : ""}">${r.published ? "Shown" : "Hidden"}</span>`; }
+
+async function openEntity(name){
+  currentEntity = ENTITIES[name];
+  $("#cTitle").textContent = currentEntity.title;
+  $("#cHelp").textContent = currentEntity.help;
+  $("#cAddLabel").textContent = "Add " + currentEntity.label;
+  $("#cHead").innerHTML = "<tr>" + currentEntity.cols.map(([h]) => `<th>${h}</th>`).join("") + "</tr>";
+  $("#cRows").innerHTML = ""; $("#cEmpty").hidden = true;
+  const { data, error } = await sb.from(currentEntity.table).select("*").order("sort");
+  if (error) return toast("Could not load: " + error.message, true);
+  contentRows = data;
+  $("#cEmpty").hidden = data.length > 0;
+  $("#cRows").innerHTML = data.map(r => `<tr data-key="${esc(r[currentEntity.key])}" tabindex="0">${currentEntity.cols.map(([, f]) => `<td>${f(r)}</td>`).join("")}</tr>`).join("");
+}
+$("#cRows").addEventListener("click", e => { const tr = e.target.closest("tr"); if (tr) editRow(contentRows.find(r => String(r[currentEntity.key]) === tr.dataset.key)); });
+$("#cRows").addEventListener("keydown", e => { if (e.key === "Enter") { const tr = e.target.closest("tr"); if (tr) editRow(contentRows.find(r => String(r[currentEntity.key]) === tr.dataset.key)); } });
+$("#cAdd").addEventListener("click", () => editRow(null));
+
+function fieldValue(f, row){
+  const v = row ? row[f.k] : f.def;
+  if (f.type === "plan") return (v || []).map(p => `${p[0]} | ${p[1]}`).join("\n");
+  if (f.type === "lines") return (v || []).join("\n");
+  return v ?? "";
+}
+function editRow(row){
+  const E = currentEntity, isNew = !row;
+  const fieldHtml = f => {
+    const id = "f_" + f.k, v = fieldValue(f, row), span = f.span === 2 ? " span2" : "", help = f.help ? `<small>${esc(f.help)}</small>` : "";
+    if (f.type === "check") return `<label class="check${span}"><input type="checkbox" id="${id}" ${v ? "checked" : ""}> ${esc(f.label)}</label>`;
+    let input;
+    if (f.type === "select") input = `<select id="${id}">${f.options.map(([val, l]) => `<option value="${esc(val)}" ${val === v ? "selected" : ""}>${esc(l)}</option>`).join("")}</select>`;
+    else if (["textarea", "plan", "lines"].includes(f.type)) input = `<textarea id="${id}" rows="${f.type === "plan" ? 7 : 4}">${esc(v)}</textarea>`;
+    else input = `<input id="${id}" type="${f.type === "number" ? "number" : f.type === "url" ? "url" : "text"}" value="${esc(v)}" ${f.placeholder ? `placeholder="${esc(f.placeholder)}"` : ""} ${f.createOnly && !isNew ? "disabled" : ""}>`;
+    const preview = f.type === "url" ? `<img class="preview" id="pv_${f.k}" alt="" ${v ? `src="${esc(v)}"` : "hidden"}>` : "";
+    return `<div class="field${span}"><label for="${id}">${esc(f.label)}</label>${input}${help}${preview}</div>`;
+  };
+  $("#editForm").innerHTML = `
+    <div class="dlgHead"><h2 id="edTitle">${isNew ? "Add " + E.label : "Edit " + E.label}</h2><button class="close" type="button" data-close aria-label="Close"><i class="ph ph-x"></i></button></div>
+    <div class="grid2">${E.fields.map(fieldHtml).join("")}</div>
+    <div class="msg error" id="edMsg" hidden style="margin-top:12px"></div>
+    <div class="actions">
+      <button class="btn btn-brand" type="submit"><i class="ph ph-floppy-disk"></i>Save</button>
+      <button class="btn btn-line" type="button" data-close>Cancel</button>
+      <span class="spacer"></span>
+      ${isNew ? "" : `<button class="btn btn-danger" type="button" id="edDelete"><i class="ph ph-trash"></i>Delete</button>`}
+    </div>`;
+  const urlField = E.fields.find(f => f.type === "url");
+  if (urlField) $("#f_" + urlField.k).addEventListener("input", e => { const p = $("#pv_" + urlField.k), u = e.target.value.trim(); p.hidden = !/^https:\/\//.test(u); if (!p.hidden) p.src = u; });
+  $("#editForm").onsubmit = async ev => {
+    ev.preventDefault();
+    const out = {}, msg = $("#edMsg"); msg.hidden = true;
+    for (const f of E.fields) {
+      if (f.createOnly && !isNew) continue;
+      const el = $("#f_" + f.k);
+      let v = f.type === "check" ? el.checked : el.value.trim();
+      if (f.req && !v) { msg.textContent = `${f.label} is required.`; msg.hidden = false; el.focus(); return; }
+      if (f.type === "slug" && !/^[a-z0-9-]{2,40}$/.test(v)) { msg.textContent = "Short ID can only use lowercase letters, numbers and dashes (2 to 40 characters)."; msg.hidden = false; el.focus(); return; }
+      if (f.type === "url" && v && !/^https:\/\//.test(v)) { msg.textContent = "The photo link must start with https://"; msg.hidden = false; el.focus(); return; }
+      if (f.type === "number") v = Number.isFinite(parseInt(v, 10)) ? parseInt(v, 10) : 100;
+      if (f.type === "lines") v = v.split("\n").map(x => x.trim()).filter(Boolean);
+      if (f.type === "plan") v = v.split("\n").map(x => x.trim()).filter(Boolean).map(line => { const i = line.indexOf("|"); return i < 0 ? ["", line] : [line.slice(0, i).trim(), line.slice(i + 1).trim()]; });
+      if (f.k === "note" && !v) v = null;
+      out[f.k] = v;
+    }
+    const q = sb.from(E.table);
+    const { error } = isNew ? await q.insert(out) : await q.update(out).eq(E.key, row[E.key]);
+    if (error) { msg.textContent = /duplicate key/.test(error.message) ? "That Short ID is already used by another tour." : error.message; msg.hidden = false; return; }
+    $("#editDlg").close(); toast("Saved. The website shows it on the next page load."); openEntity(Object.keys(ENTITIES).find(k => ENTITIES[k] === E));
+  };
+  if (!isNew) armDelete($("#edDelete"), async () => {
+    const { error } = await sb.from(E.table).delete().eq(E.key, row[E.key]);
+    if (error) return toast("Not deleted: " + error.message, true);
+    $("#editDlg").close(); toast("Deleted"); openEntity(Object.keys(ENTITIES).find(k => ENTITIES[k] === E));
+  });
+  $("#editDlg").showModal();
+}
+
+/* Dialog closing */
+document.addEventListener("click", e => { const c = e.target.closest("[data-close]"); if (c) c.closest("dialog").close(); });
+$$("dialog").forEach(d => d.addEventListener("click", e => { if (e.target === d) d.close(); }));
+
+/* Refresh bookings every 2 minutes while the tab is open */
+setInterval(() => { if (!document.hidden && sb && !$("#viewApp").hidden && !$("#secBookings").hidden && !$("#bookingDlg").open) loadBookings(); }, 120000);
+
+start();
+</script>
+</body>
+</html>

@@ -183,10 +183,11 @@ header.nav{position:sticky;top:0;z-index:60;background:rgb(13 47 39 / .96);backd
 .f1{grid-column:1;grid-row:1 / span 2}
 .f2{grid-column:2;grid-row:1}
 .f3{grid-column:3;grid-row:1}
-.venues{grid-column:2 / span 2;grid-row:2;display:grid;grid-template-columns:1fr 1fr;gap:12px 18px;align-content:center;padding:20px;border-radius:var(--radius);background:var(--surface);border:1px solid var(--line)}
+.venues{grid-column:2 / span 2;grid-row:2;display:flex;flex-direction:column;gap:16px;justify-content:center;padding:20px;border-radius:var(--radius);background:var(--surface);border:1px solid var(--line)}
+.venueList{display:grid;grid-template-columns:1fr 1fr;gap:12px 18px}
 .venue b{display:block;font-size:15.5px}
 .venue span{font-size:14px;color:var(--muted)}
-.venues .btn{grid-column:span 2;justify-self:start}
+.venues .btn{align-self:flex-start}
 
 /* Tours */
 .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:22px}
@@ -259,6 +260,8 @@ fieldset{border:0;padding:0;margin:0}
 legend{font-size:13px;font-weight:600;color:var(--muted);margin-bottom:8px}
 .checks{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
 .checks label{display:flex;gap:8px;align-items:center;font-size:15px;padding:9px 12px;border:1px solid var(--line);border-radius:var(--radius-sm);cursor:pointer}
+.otherPlaces{margin-top:10px}
+.otherPlaces[hidden]{display:none}
 .checks label:has(input:checked){border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent)}
 .summary{position:sticky;top:96px;background:var(--brand);color:var(--on-brand);border-radius:var(--radius);padding:24px}
 .summary h3{font-size:24px;margin-bottom:6px}
@@ -358,6 +361,10 @@ dialog::backdrop{background:rgb(5 20 16 / .7)}
 .notice{font-size:14px;color:var(--muted);margin:14px 0;display:flex;gap:8px;align-items:flex-start}
 .notice i{margin-top:3px}
 .err{color:#b3261e;font-size:13.5px;display:none}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:300;background:var(--brand);color:var(--on-brand);border:1px solid var(--accent);border-radius:var(--radius);padding:14px 18px;max-width:min(520px,calc(100% - 32px));box-shadow:0 18px 50px rgb(0 0 0 / .3);font-size:15px;display:flex;gap:10px;align-items:flex-start}
+.toast[hidden]{display:none}
+.toast b{color:var(--accent)}
 .field.invalid input{border-color:#b3261e}
 .field.invalid .err{display:block}
 .detailImg{width:100%;aspect-ratio:16/8;object-fit:cover;border-radius:var(--radius-sm);margin-bottom:16px}
@@ -423,8 +430,7 @@ dialog::backdrop{background:rgb(5 20 16 / .7)}
   .trust{grid-template-columns:1fr}
   .route,.cities,.groupTypes{grid-template-columns:1fr}
   .foodGrid{grid-template-columns:1fr 1fr;grid-template-rows:150px 150px auto}
-  .venues{grid-template-columns:1fr}
-  .venues .btn{grid-column:auto}
+  .venueList{grid-template-columns:1fr}
   .tourGrid,.seasonGrid,.grid2,.checks,.people,.incl{grid-template-columns:1fr}
   .span2{grid-column:auto}
   .dine{grid-template-columns:1fr}
@@ -580,7 +586,7 @@ dialog::backdrop{background:rgb(5 20 16 / .7)}
 <section class="offer" id="offers">
   <div class="wrap offerIn reveal">
     <i class="ph ph-seal-percent" aria-hidden="true"></i>
-    <div>
+    <div id="offerBody">
       <h2>Special discount offers</h2>
       <p>Ask about our current company discounts for families, school and college groups and large group bookings. Offers change with the season and are shared with you personally.</p>
     </div>
@@ -613,7 +619,7 @@ dialog::backdrop{background:rgb(5 20 16 / .7)}
     </div>
     <div class="hotels reveal">
       <h3>Hotels we book</h3>
-      <ul class="hotelList">
+      <ul class="hotelList" id="hotelList">
         <li><i class="ph ph-star" aria-hidden="true"></i><span><b>Al-Maaz Hotel</b>The Mall, Murree. Our own hotel</span></li>
         <li><i class="ph ph-buildings" aria-hidden="true"></i><span><b>Hotel Felton</b>Bank Road, Murree. Partner hotel</span></li>
         <li><i class="ph ph-buildings" aria-hidden="true"></i><span><b>Ramada by Wyndham Murree</b>Lower Topa. Rooms and group bookings</span></li>
@@ -637,10 +643,12 @@ dialog::backdrop{background:rgb(5 20 16 / .7)}
       <figure class="f2 reveal"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Sindhi_Biryani.JPG/960px-Sindhi_Biryani.JPG" alt="A large platter of biryani" loading="lazy" decoding="async" width="960" height="720"></figure>
       <figure class="f3 reveal"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Pakistani_Food_Beef_Kabobs.jpg/960px-Pakistani_Food_Beef_Kabobs.jpg" alt="Grilled kebabs with onions and green chillies" loading="lazy" decoding="async" width="960" height="643"></figure>
       <div class="venues reveal">
+        <div class="venueList" id="venueList">
         <div class="venue"><b>Ramada by Wyndham, Islamabad</b><span>Breakfast, hi-tea, lunch and dinner buffets</span></div>
         <div class="venue"><b>Usmania Restaurant, Murree</b><span>Buffets and group lunches and dinners</span></div>
-        <div class="venue" id="restaurant"><b>Dervash Restaurant, Murree</b><span>Our own restaurant on The Mall, with family seating and group bookings</span></div>
+        <div class="venue"><b>Dervash Restaurant, Murree</b><span>Our own restaurant on The Mall, with family seating and group bookings</span></div>
         <div class="venue"><b>Galiyat and Kaghan</b><span>Group dinners in Nathia Gali, Ayubia, Shogran and Naran</span></div>
+        </div>
         <button class="btn btn-brand" type="button" data-enquire="Group meal or buffet">Book a group meal</button>
       </div>
     </div>
@@ -670,7 +678,7 @@ dialog::backdrop{background:rgb(5 20 16 / .7)}
       <p>Pick your places, transport and stay. We turn it into a day-by-day plan for you.</p>
     </div>
     <div class="builder">
-      <form class="builderForm" id="builderForm">
+      <form class="builderForm" id="builderForm" novalidate>
         <div class="grid2">
           <div class="field"><label for="bStart">Starting city</label><select id="bStart"><option>Islamabad</option><option>Lahore</option><option>Murree</option><option>Other</option></select></div>
           <div class="field"><label for="bFormat">Trip style</label><select id="bFormat"><option>Family trip</option><option>Private tour</option><option>Friends or office group</option><option>School or college tour</option><option>University study tour</option><option>Day trip</option></select></div>
@@ -689,6 +697,12 @@ dialog::backdrop{background:rgb(5 20 16 / .7)}
               <label><input type="checkbox" value="Skardu and Deosai"> Skardu and Deosai</label>
               <label><input type="checkbox" value="Hunza and Khunjerab"> Hunza and Khunjerab</label>
               <label><input type="checkbox" value="Islamabad"> Islamabad city</label>
+              <label><input type="checkbox" value="Lahore"> Lahore city</label>
+              <label><input type="checkbox" id="bOtherChk"> Other places</label>
+            </div>
+            <div class="field otherPlaces" id="bOtherWrap" hidden>
+              <label for="bOther">Which other places?</label>
+              <input id="bOther" placeholder="For example Kalash Valley, Gilgit, Chitral, Muzaffarabad">
             </div>
           </fieldset>
           <fieldset class="span2">
@@ -705,8 +719,9 @@ dialog::backdrop{background:rgb(5 20 16 / .7)}
           <div class="field"><label for="bDate">Travel date</label><input id="bDate" type="date"></div>
           <div class="field"><label for="bDays">Number of days</label><input id="bDays" type="number" min="1" max="30" value="5"></div>
           <div class="field"><label for="bGuests">Guests</label><input id="bGuests" type="number" min="1" max="500" value="2"></div>
-          <div class="field"><label for="bName">Your name</label><input id="bName" autocomplete="name"></div>
-          <div class="field"><label for="bPhone">WhatsApp number</label><input id="bPhone" type="tel" autocomplete="tel" placeholder="+92 300 1234567"></div>
+          <div class="field"><label for="bName">Your name</label><input id="bName" autocomplete="name" required><span class="err">Please enter your name.</span></div>
+          <div class="field"><label for="bPhone">WhatsApp number</label><input id="bPhone" type="tel" autocomplete="tel" placeholder="+92 300 1234567" required><span class="err">Please enter a number we can reach.</span></div>
+          <div class="hp" aria-hidden="true"><label for="bWebsite">Leave this empty</label><input id="bWebsite" tabindex="-1" autocomplete="off"></div>
           <div class="field"><label for="bEmail">Email (optional)</label><input id="bEmail" type="email" autocomplete="email"></div>
           <div class="field span2"><label for="bNotes">Anything else?</label><textarea id="bNotes" rows="3" placeholder="Airport pickup, food preferences, travelling with children or elderly parents..."></textarea></div>
         </div>
@@ -852,7 +867,7 @@ dialog::backdrop{background:rgb(5 20 16 / .7)}
         <a class="brand" href="#top"><span class="logo" aria-hidden="true">DP</span><span><b style="color:#fff">DISCOVER PAKISTAN</b><small>TOURISM &amp; HOSPITALITY</small></span></a>
         <p style="margin-top:14px">Tours, hotel stays, dining and private transport across Pakistan, from our base on The Mall, Murree.</p>
       </div>
-      <div><h4>Explore</h4><div class="footLinks"><a href="#tours">Tours</a><a href="#destinations">Destinations</a><a href="#stay">Al-Maaz Hotel</a><a href="#restaurant">Dervash Restaurant</a><a href="#transport">Transport</a><a href="#custom">Build your trip</a><a href="#guides">Travel guides</a></div></div>
+      <div><h4>Explore</h4><div class="footLinks"><a href="#tours">Tours</a><a href="#destinations">Destinations</a><a href="#stay">Al-Maaz Hotel</a><a href="#food">Dervash Restaurant</a><a href="#transport">Transport</a><a href="#custom">Build your trip</a><a href="#guides">Travel guides</a></div></div>
       <div><h4>Help</h4><div class="footLinks"><a href="#travel-info">Travel information</a><a href="#faq">FAQs</a><a href="#about">About us</a><button class="linkBtn" type="button" data-policy="privacy">Privacy policy</button><button class="linkBtn" type="button" data-policy="terms">Booking terms</button></div></div>
       <div>
         <h4>Mobile and WhatsApp</h4>
@@ -870,6 +885,8 @@ dialog::backdrop{background:rgb(5 20 16 / .7)}
   </div>
 </footer>
 
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
 <a class="btn btn-wa waFloat" href="https://wa.me/923005390720?text=Hello%20Discover%20Pakistan%20Tourism%2C%20I%20would%20like%20to%20plan%20a%20trip." target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp"><i class="ph ph-whatsapp-logo" aria-hidden="true" style="font-size:22px"></i><span>WhatsApp us</span></a>
 
 <!-- Enquiry dialog -->
@@ -885,6 +902,7 @@ dialog::backdrop{background:rgb(5 20 16 / .7)}
       <div class="field"><label for="eGuests">Guests</label><select id="eGuests" name="Guests"><option>1</option><option selected>2</option><option>3 to 5</option><option>6 to 15</option><option>16 to 40</option><option>More than 40</option></select></div>
       <div class="field"><label for="eEmail">Email (optional)</label><input id="eEmail" name="Email" type="email" autocomplete="email"></div>
       <div class="field"><label for="eFrom">Travelling from</label><input id="eFrom" name="From" placeholder="City or country"></div>
+      <div class="hp" aria-hidden="true"><label for="eWebsite">Leave this empty</label><input id="eWebsite" name="website" tabindex="-1" autocomplete="off"></div>
       <div class="field span2"><label for="eMsg">Anything else?</label><textarea id="eMsg" name="Message" rows="3" placeholder="Pickup point, room needs, special requests"></textarea></div>
     </div>
     <p class="notice"><i class="ph ph-info" aria-hidden="true"></i><span>Sending opens WhatsApp with your details filled in. Our team discusses your request and sends you a complete package with rates on WhatsApp or email. Nothing is booked until you confirm.</span></p>
@@ -901,9 +919,10 @@ dialog::backdrop{background:rgb(5 20 16 / .7)}
 <!-- Policy dialog -->
 <dialog id="policyDlg" aria-labelledby="policyTitle"><div class="dlg article" id="policyDlgBody"></div></dialog>
 
+<script src="config.js"></script>
 <script>
 /* =====================================================================
-   EDIT YOUR TOURS HERE.
+   EDIT YOUR TOURS HERE (or, once Supabase is set up, in admin.html).
    Prices are deliberately NOT shown on the website. The owners share
    the cost with each customer directly.
    ===================================================================== */
@@ -926,6 +945,7 @@ const IMG = {
   foodStreet:"https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Night_View_of_Lahore_Fort_Food_Street.JPG/960px-Night_View_of_Lahore_Fort_Food_Street.JPG",
   sharda:"https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/View_From_Sharda_Fort%2C_Azad_Jammu_%26_Kashmir%2C_Pakistan.jpg/960px-View_From_Sharda_Fort%2C_Azad_Jammu_%26_Kashmir%2C_Pakistan.jpg"
 };
+const FALLBACK_IMG = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Muree_veiw.jpg/960px-Muree_veiw.jpg";
 const STD_INCL = ["Private vehicle with driver","Fuel, tolls and parking","Hotel stays as agreed in your package","Driver's meals and stay"];
 const STD_EXCL = ["Meals, unless added to your package","Entry tickets and activities","Personal expenses and tips"];
 
@@ -1043,9 +1063,9 @@ const openWA = (num, lines) => window.open(`https://wa.me/${num}?text=${encodeUR
 function renderTours(){
   $("#tourGrid").innerHTML = TOURS.map(t => `
    <article class="tour reveal" data-id="${t.id}" data-region="${esc(t.region)}" data-length="${t.length}" data-search="${esc((t.title+" "+t.summary+" "+t.plan.map(p=>p[1]).join(" ")).toLowerCase())}">
-     <img src="${t.img}" alt="${esc(t.alt)}" loading="lazy" decoding="async" width="960" height="640">
+     <img src="${esc(t.img || FALLBACK_IMG)}" alt="${esc(t.alt)}" loading="lazy" decoding="async" width="960" height="640">
      <div class="tourBody">
-       <div class="tourMeta"><span>${esc(t.region)}</span><span>${t.days}</span></div>
+       <div class="tourMeta"><span>${esc(t.region)}</span><span>${esc(t.days)}</span></div>
        <h3>${esc(t.title)}</h3>
        <p>${esc(t.summary)}</p>
        <span class="season"><i class="ph ph-sun-horizon" aria-hidden="true"></i>Best: ${esc(t.season)}</span>
@@ -1075,8 +1095,8 @@ function setRegion(r, scroll){
 function showTour(id){
   const t = TOURS.find(x => x.id === id); if (!t) return;
   $("#tourDlgBody").innerHTML = `
-   <div class="dlgHead"><div><p style="color:var(--muted);font-weight:600;font-size:14px">${esc(t.region)}, ${t.days}</p><h2 id="tourTitle">${esc(t.title)}</h2></div><button class="close" type="button" data-close aria-label="Close"><i class="ph ph-x" aria-hidden="true"></i></button></div>
-   <img class="detailImg" src="${t.img}" alt="${esc(t.alt)}">
+   <div class="dlgHead"><div><p style="color:var(--muted);font-weight:600;font-size:14px">${esc(t.region)}, ${esc(t.days)}</p><h2 id="tourTitle">${esc(t.title)}</h2></div><button class="close" type="button" data-close aria-label="Close"><i class="ph ph-x" aria-hidden="true"></i></button></div>
+   <img class="detailImg" src="${esc(t.img || FALLBACK_IMG)}" alt="${esc(t.alt)}">
    <p style="color:var(--muted)">${esc(t.summary)}</p>
    <p style="margin-top:12px;font-size:15px"><b>Best time:</b> ${esc(t.season)}<br><b>Starts from:</b> ${esc(t.start)}</p>
    <h3 style="margin-top:20px;font-size:19px">Sample plan</h3>
@@ -1097,7 +1117,7 @@ function compare(){
   if (!list.length){ box.innerHTML = `<p class="notice"><i class="ph ph-info" aria-hidden="true"></i><span>Tick at least one tour first.</span></p>`; return; }
   const row = (label, f) => `<tr><th scope="row">${label}</th>${list.map(t => `<td>${f(t)}</td>`).join("")}</tr>`;
   box.innerHTML = `<table class="cmpTable"><tr><th scope="row">Tour</th>${list.map(t=>`<td><b>${esc(t.title)}</b></td>`).join("")}</tr>
-    ${row("Length", t => t.days)}${row("Best time", t => esc(t.season))}${row("Starts from", t => esc(t.start))}${row("Highlights", t => esc(t.summary))}</table>`;
+    ${row("Length", t => esc(t.days))}${row("Best time", t => esc(t.season))}${row("Starts from", t => esc(t.start))}${row("Highlights", t => esc(t.summary))}</table>`;
 }
 
 /* Enquiry dialog */
@@ -1116,15 +1136,30 @@ $("#enquiryForm").addEventListener("submit", e => {
   ["#eName","#ePhone"].forEach(id => { const el = $(id), bad = !el.value.trim(); el.closest(".field").classList.toggle("invalid", bad); if (bad) ok = false; });
   if (!ok) { $("#enquiryForm .invalid input").focus(); return; }
   const d = new FormData(e.target), service = d.get("Service");
-  const lines = ["Hello Discover Pakistan Tourism, I would like to make an enquiry.", "", ...[...d.entries()].filter(([,v]) => String(v).trim()).map(([k,v]) => `${k}: ${v}`)];
+  const ref = newRef();
+  const lines = ["Hello Discover Pakistan Tourism, I would like to make an enquiry.", "Reference: " + ref, "", ...[...d.entries()].filter(([k,v]) => k !== "website" && String(v).trim()).map(([k,v]) => `${k}: ${v}`)];
   openWA(service === "Hotel Felton enquiry" ? WA_FELTON : WA_MAIN, lines);
+  if (!d.get("website")) saveBooking({
+    ref, source: "enquiry", name: d.get("Name"), phone: d.get("Phone"), email: d.get("Email"), service,
+    destination: d.get("Destination"), travel_date: d.get("Date"), guests: d.get("Guests"),
+    travelling_from: d.get("From"), message: d.get("Message"), details: {}
+  });
   $("#enquiryDlg").close();
+  e.target.reset();
+  showToast(ref);
 });
 
 /* Builder */
+function getPlaces(){
+  const list = $$("#bPlaces input:checked").filter(x => x.id !== "bOtherChk").map(x => x.value);
+  const other = $("#bOther").value.trim();
+  if ($("#bOtherChk").checked) list.push(other ? "Other: " + other : "Other places (to discuss)");
+  return list;
+}
+$("#bOtherChk").addEventListener("change", e => { $("#bOtherWrap").hidden = !e.target.checked; if (e.target.checked) $("#bOther").focus(); });
 const val = id => $(id).value;
 function updateSummary(){
-  const places = $$("#bPlaces input:checked").map(x => x.value);
+  const places = getPlaces();
   $("#sStart").textContent = val("#bStart");
   $("#sFormat").textContent = val("#bFormat");
   $("#sTransport").textContent = val("#bTransport");
@@ -1137,8 +1172,18 @@ function updateSummary(){
 $("#builderForm").addEventListener("input", updateSummary);
 $("#builderForm").addEventListener("submit", e => {
   e.preventDefault();
-  const places = $$("#bPlaces input:checked").map(x => x.value);
-  openWA(WA_MAIN, ["Hello Discover Pakistan Tourism, I would like a custom trip plan.", "",
+  let ok = true;
+  ["#bName","#bPhone"].forEach(id => { const el = $(id), bad = !el.value.trim(); el.closest(".field").classList.toggle("invalid", bad); if (bad) ok = false; });
+  if (!ok) { $("#builderForm .invalid input").focus(); return; }
+  const places = getPlaces(), meals = $$("#bMeals input:checked").map(x => x.value), ref = newRef();
+  if (!val("#bWebsite")) saveBooking({
+    ref, source: "trip_builder", name: val("#bName"), phone: val("#bPhone"), email: val("#bEmail"),
+    service: "Custom trip: " + val("#bFormat"), destination: places.join(", "), travel_date: val("#bDate"),
+    guests: val("#bGuests"), travelling_from: val("#bStart"), message: val("#bNotes"),
+    details: { start: val("#bStart"), style: val("#bFormat"), transport: val("#bTransport"), hotels: val("#bStay"), places, meals, days: val("#bDays") }
+  });
+  setTimeout(() => showToast(ref), 0);
+  openWA(WA_MAIN, ["Hello Discover Pakistan Tourism, I would like a custom trip plan.", "Reference: " + ref, "",
     "Starting from: " + val("#bStart"), "Style: " + val("#bFormat"), "Transport: " + val("#bTransport"), "Hotels: " + val("#bStay"),
     "Places: " + (places.join(", ") || "Not sure yet"), "Meals: " + ($$("#bMeals input:checked").map(x => x.value).join(", ") || "Not needed"), "Date: " + (val("#bDate") || "Flexible"), "Days: " + val("#bDays"), "Guests: " + val("#bGuests"),
     "Name: " + val("#bName"), "WhatsApp: " + val("#bPhone"), "Email: " + val("#bEmail"), "Notes: " + val("#bNotes")]);
@@ -1191,8 +1236,79 @@ const menuBtn = $("#menuBtn"), nav = $("#navlinks");
 menuBtn.addEventListener("click", () => { const open = nav.classList.toggle("open"); menuBtn.setAttribute("aria-expanded", open); menuBtn.setAttribute("aria-label", open ? "Close menu" : "Open menu"); });
 $$("#navlinks a").forEach(a => a.addEventListener("click", () => { nav.classList.remove("open"); menuBtn.setAttribute("aria-expanded", "false"); }));
 
+/* =====================================================================
+   DATABASE (Supabase). Settings live in config.js. If they are empty or
+   the database cannot be reached, the site keeps working with the
+   built-in content above and enquiries still go to WhatsApp.
+   ===================================================================== */
+const CFG = window.DP_CONFIG || {};
+let sbClient = null;
+const sbReady = new Promise(resolve => {
+  if (!CFG.supabaseUrl || !CFG.supabaseAnonKey) return resolve(null);
+  const tag = document.createElement("script");
+  tag.src = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.0/dist/umd/supabase.js";
+  tag.onload = () => { try { sbClient = window.supabase.createClient(CFG.supabaseUrl, CFG.supabaseAnonKey, { auth: { persistSession: false } }); } catch (err) { console.warn("Supabase setup failed", err); } resolve(sbClient); };
+  tag.onerror = () => resolve(null);
+  document.head.appendChild(tag);
+});
+function newRef(){
+  const abc = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789", bytes = new Uint8Array(6);
+  (window.crypto || window.msCrypto).getRandomValues(bytes);
+  return "DP-" + [...bytes].map(b => abc[b % abc.length]).join("");
+}
+const clip = (v, n) => { v = (v == null ? "" : String(v)).trim(); return v ? v.slice(0, n) : null; };
+async function saveBooking(b){
+  const row = {
+    ref: b.ref, source: b.source, name: clip(b.name, 120), phone: clip(b.phone, 40), email: clip(b.email, 200),
+    service: clip(b.service, 80), destination: clip(b.destination, 400),
+    travel_date: /^\d{4}-\d{2}-\d{2}$/.test(b.travel_date || "") ? b.travel_date : null,
+    guests: clip(b.guests, 40), travelling_from: clip(b.travelling_from, 120), message: clip(b.message, 3000), details: b.details || {}
+  };
+  const sb = await sbReady;
+  if (!sb) return false;
+  const { error } = await sb.from("bookings").insert(row);
+  if (error) { console.warn("Booking not saved", error.message); return false; }
+  return true;
+}
+let toastTimer;
+function showToast(ref){
+  const t = $("#toast");
+  t.innerHTML = `<i class="ph ph-check-circle" aria-hidden="true" style="font-size:22px;color:var(--accent)"></i><span>Thank you. Your reference is <b>${esc(ref)}</b>. Please press send in WhatsApp, and our team will reply with your package.</span>`;
+  t.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(() => t.hidden = true, 12000);
+}
+const safeImg = u => /^https:\/\//.test(u || "") ? u : "";
+function revealNow(root){ $$(".reveal", root).forEach(el => el.classList.add("in")); }
+async function loadContent(){
+  const sb = await sbReady;
+  if (!sb) return;
+  try {
+    const q = t => sb.from(t).select("*").eq("published", true).order("sort");
+    const [tours, offers, hotels, venues] = await Promise.all([q("tours"), q("offers"), q("hotels"), q("venues")]);
+    if (!tours.error && tours.data.length) {
+      TOURS.splice(0, TOURS.length, ...tours.data.map(r => ({
+        id: r.id, region: r.region, length: r.length, days: r.days, title: r.title, summary: r.summary, season: r.season,
+        start: r.start_from, img: safeImg(r.img), alt: r.alt, plan: Array.isArray(r.plan) ? r.plan : [],
+        incl: Array.isArray(r.incl) ? r.incl : [], excl: Array.isArray(r.excl) ? r.excl : [], note: r.note || ""
+      })));
+      renderTours(); applyFilters(); revealNow($("#tourGrid"));
+    }
+    if (!offers.error && offers.data.length) {
+      const [first, ...more] = offers.data;
+      $("#offerBody").innerHTML = `<h2>${esc(first.title)}</h2><p>${esc(first.body)}</p>` +
+        more.map(o => `<p style="margin-top:8px"><b>${esc(o.title)}.</b> ${esc(o.body)}</p>`).join("");
+    }
+    if (!hotels.error && hotels.data.length) {
+      $("#hotelList").innerHTML = hotels.data.map(h => `<li><i class="ph ph-${/^[a-z-]+$/.test(h.icon) ? h.icon : "buildings"}" aria-hidden="true"></i><span><b>${esc(h.name)}</b>${esc(h.details)}</span></li>`).join("");
+    }
+    if (!venues.error && venues.data.length) {
+      $("#venueList").innerHTML = venues.data.map(v => `<div class="venue"><b>${esc(v.name)}</b><span>${esc(v.details)}</span></div>`).join("");
+    }
+  } catch (err) { console.warn("Content not loaded, using built-in content", err); }
+}
+
 /* Init */
 renderTours();
+loadContent();
 $("#tourSearch").addEventListener("input", applyFilters);
 $("#tourLength").addEventListener("change", applyFilters);
 $("#clearFilters").addEventListener("click", () => { $("#tourSearch").value = ""; $("#tourLength").value = "all"; setRegion("All", false); });
