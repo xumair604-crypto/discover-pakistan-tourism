@@ -1,26 +1,26 @@
-# Discover Pakistan Tourism — Frontend Preview
+# Discover Pakistan Tourism
 
-A responsive, enquiry-led travel and hospitality website for Discover Pakistan Tourism.
+Website for Discover Pakistan Tourism: private tours across Pakistan, Al-Maaz Hotel and Dervash Restaurant on The Mall, Murree, partner stays at Hotel Felton, and private transport.
 
-## Included
-- Premium travel-style homepage inspired by the Past Enlighten reference design.
-- Hotel stays: Al-Maaz Hotel (associated/managed property) and Hotel Felton (partner property).
-- Tour previews for Murree, Hunza, Skardu, Naran & Kaghan, Kashmir, Lahore, Islamabad and Swat.
-- Transportation, Dervash Restaurant, destination sections and travel blog previews.
-- Tour filtering, search, duration filter and comparison.
-- Custom tour builder with live summary.
-- Gallery, review placeholders, About, FAQs and responsive navigation.
-- Enquiry forms that prepare WhatsApp messages with separate contact routing.
+Live site: https://xumair604-crypto.github.io/discover-pakistan-tourism/
 
-## Run locally
-Open `index.html` in a modern browser. Internet access is needed for external stock photos and Google Fonts.
+## What is on the site
+- Tours with day-by-day sample plans, inclusions, best season, search, filters and side-by-side compare.
+- Al-Maaz Hotel, Dervash Restaurant and Hotel Felton (partner) with direct contact details.
+- Private transport, a custom trip builder, travel information (seasons, visas, roads, packing) and three travel guides.
+- Map, FAQs, privacy policy and booking terms.
+- Every enquiry opens WhatsApp with the details filled in. Hotel Felton enquiries go to Hotel Felton's number; everything else goes to the main number.
+- SEO: page description, Open Graph tags and schema.org data (TravelAgency, Hotel, Restaurant). Light and dark mode.
 
-## Important
-This is a frontend-only prototype. It has no backend, database, admin panel, live availability, booking persistence, payment processing, CMS or automated email. Enquiry forms open WhatsApp and do not save submissions. Package durations and descriptions are sample content; verify tour operations and details before publishing. Reviews are placeholders, not real testimonials. Images are illustrative stock photos and should be replaced with approved business and property photos.
+## Editing common things
+All tour content is in the `TOURS` list near the bottom of `index.html`.
+
+- **Prices:** fill in `price` for a tour, for example `price:"45,000"`. It shows as "From PKR 45,000 per person". Empty shows "Ask for today's price".
+- **Itineraries:** edit the `plan` lines, `incl` (included) and `excl` (not included).
+- **Guides and policies:** edit the `GUIDES` and `POLICIES` text in the same script.
+
+## Photos
+Destination photos are real photographs from Wikimedia Commons, credited in the footer under "Photo credits". Replace the hotel and restaurant section photos with your own photography of Al-Maaz Hotel and Dervash Restaurant when available.
 
 ## Publish with GitHub Pages
-
-1. Open repository **Settings → Pages**.
-2. Under **Build and deployment**, set **Source** to **Deploy from a branch**.
-3. Select branch **main** and folder **/ (root)**, then click **Save**.
-4. Wait for GitHub Pages to finish publishing. The site URL will be `https://xumair604-crypto.github.io/discover-pakistan-tourism/`.
+Settings, Pages, Deploy from a branch, branch `main`, folder `/ (root)`.
