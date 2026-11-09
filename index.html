@@ -922,7 +922,7 @@ dialog::backdrop{background:rgb(5 20 16 / .7)}
 <script src="config.js"></script>
 <script>
 /* =====================================================================
-   EDIT YOUR TOURS HERE (or, once Supabase is set up, in admin.html).
+   EDIT YOUR TOURS HERE (or, once the backend is running, in its /admin page).
    Prices are deliberately NOT shown on the website. The owners share
    the cost with each customer directly.
    ===================================================================== */
@@ -1237,20 +1237,12 @@ menuBtn.addEventListener("click", () => { const open = nav.classList.toggle("ope
 $$("#navlinks a").forEach(a => a.addEventListener("click", () => { nav.classList.remove("open"); menuBtn.setAttribute("aria-expanded", "false"); }));
 
 /* =====================================================================
-   DATABASE (Supabase). Settings live in config.js. If they are empty or
-   the database cannot be reached, the site keeps working with the
-   built-in content above and enquiries still go to WhatsApp.
+   BACKEND (Python on PythonAnywhere). Its address lives in config.js.
+   If it is empty or the server cannot be reached, the site keeps working
+   with the built-in content above and enquiries still go to WhatsApp.
    ===================================================================== */
 const CFG = window.DP_CONFIG || {};
-let sbClient = null;
-const sbReady = new Promise(resolve => {
-  if (!CFG.supabaseUrl || !CFG.supabaseAnonKey) return resolve(null);
-  const tag = document.createElement("script");
-  tag.src = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.0/dist/umd/supabase.js";
-  tag.onload = () => { try { sbClient = window.supabase.createClient(CFG.supabaseUrl, CFG.supabaseAnonKey, { auth: { persistSession: false } }); } catch (err) { console.warn("Supabase setup failed", err); } resolve(sbClient); };
-  tag.onerror = () => resolve(null);
-  document.head.appendChild(tag);
-});
+const API = String(CFG.apiBase || "").replace(/\/+$/, "");
 function newRef(){
   const abc = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789", bytes = new Uint8Array(6);
   (window.crypto || window.msCrypto).getRandomValues(bytes);
@@ -1258,17 +1250,19 @@ function newRef(){
 }
 const clip = (v, n) => { v = (v == null ? "" : String(v)).trim(); return v ? v.slice(0, n) : null; };
 async function saveBooking(b){
+  if (!API) return false;
   const row = {
     ref: b.ref, source: b.source, name: clip(b.name, 120), phone: clip(b.phone, 40), email: clip(b.email, 200),
     service: clip(b.service, 80), destination: clip(b.destination, 400),
     travel_date: /^\d{4}-\d{2}-\d{2}$/.test(b.travel_date || "") ? b.travel_date : null,
     guests: clip(b.guests, 40), travelling_from: clip(b.travelling_from, 120), message: clip(b.message, 3000), details: b.details || {}
   };
-  const sb = await sbReady;
-  if (!sb) return false;
-  const { error } = await sb.from("bookings").insert(row);
-  if (error) { console.warn("Booking not saved", error.message); return false; }
-  return true;
+  try {
+    // Sent as text/plain with keepalive so the booking still arrives while WhatsApp opens.
+    const res = await fetch(API + "/api/bookings", { method: "POST", headers: { "Content-Type": "text/plain;charset=UTF-8" }, body: JSON.stringify(row), keepalive: true, mode: "cors" });
+    if (!res.ok) console.warn("Booking not saved", res.status);
+    return res.ok;
+  } catch (err) { console.warn("Booking not saved", err); return false; }
 }
 let toastTimer;
 function showToast(ref){
@@ -1279,29 +1273,29 @@ function showToast(ref){
 const safeImg = u => /^https:\/\//.test(u || "") ? u : "";
 function revealNow(root){ $$(".reveal", root).forEach(el => el.classList.add("in")); }
 async function loadContent(){
-  const sb = await sbReady;
-  if (!sb) return;
+  if (!API) return;
   try {
-    const q = t => sb.from(t).select("*").eq("published", true).order("sort");
-    const [tours, offers, hotels, venues] = await Promise.all([q("tours"), q("offers"), q("hotels"), q("venues")]);
-    if (!tours.error && tours.data.length) {
-      TOURS.splice(0, TOURS.length, ...tours.data.map(r => ({
+    const res = await fetch(API + "/api/content", { mode: "cors" });
+    if (!res.ok) return;
+    const { tours = [], offers = [], hotels = [], venues = [] } = await res.json();
+    if (tours.length) {
+      TOURS.splice(0, TOURS.length, ...tours.map(r => ({
         id: r.id, region: r.region, length: r.length, days: r.days, title: r.title, summary: r.summary, season: r.season,
         start: r.start_from, img: safeImg(r.img), alt: r.alt, plan: Array.isArray(r.plan) ? r.plan : [],
         incl: Array.isArray(r.incl) ? r.incl : [], excl: Array.isArray(r.excl) ? r.excl : [], note: r.note || ""
       })));
       renderTours(); applyFilters(); revealNow($("#tourGrid"));
     }
-    if (!offers.error && offers.data.length) {
-      const [first, ...more] = offers.data;
+    if (offers.length) {
+      const [first, ...more] = offers;
       $("#offerBody").innerHTML = `<h2>${esc(first.title)}</h2><p>${esc(first.body)}</p>` +
         more.map(o => `<p style="margin-top:8px"><b>${esc(o.title)}.</b> ${esc(o.body)}</p>`).join("");
     }
-    if (!hotels.error && hotels.data.length) {
-      $("#hotelList").innerHTML = hotels.data.map(h => `<li><i class="ph ph-${/^[a-z-]+$/.test(h.icon) ? h.icon : "buildings"}" aria-hidden="true"></i><span><b>${esc(h.name)}</b>${esc(h.details)}</span></li>`).join("");
+    if (hotels.length) {
+      $("#hotelList").innerHTML = hotels.map(h => `<li><i class="ph ph-${/^[a-z-]+$/.test(h.icon) ? h.icon : "buildings"}" aria-hidden="true"></i><span><b>${esc(h.name)}</b>${esc(h.details)}</span></li>`).join("");
     }
-    if (!venues.error && venues.data.length) {
-      $("#venueList").innerHTML = venues.data.map(v => `<div class="venue"><b>${esc(v.name)}</b><span>${esc(v.details)}</span></div>`).join("");
+    if (venues.length) {
+      $("#venueList").innerHTML = venues.map(v => `<div class="venue"><b>${esc(v.name)}</b><span>${esc(v.details)}</span></div>`).join("");
     }
   } catch (err) { console.warn("Content not loaded, using built-in content", err); }
 }

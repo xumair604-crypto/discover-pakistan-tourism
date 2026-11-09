@@ -1,0 +1,5 @@
+# Backend secrets and data (live only on the server)
+backend/instance/
+__pycache__/
+*.pyc
+*.sqlite3
