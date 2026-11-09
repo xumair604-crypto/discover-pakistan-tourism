@@ -1,0 +1,526 @@
+{
+ "tours": [
+  {
+   "id": "murree",
+   "region": "Murree & Galiyat",
+   "length": "short",
+   "days": "2 days",
+   "title": "Murree Hills and Patriata",
+   "summary": "Mall Road, Kashmir Point and the Patriata chairlift, with a night at our own hotel on The Mall.",
+   "season": "All year, snow in winter",
+   "start_from": "Islamabad or Rawalpindi",
+   "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Patriatta_%28cropped%29.jpg/960px-Patriatta_%28cropped%29.jpg",
+   "alt": "Patriata cable car cabins above forested hills near Murree",
+   "plan": [
+    [
+     "Day 1",
+     "Drive from Islamabad (about 1.5 hours). Check in at Al-Maaz Hotel on The Mall. Evening walk along Mall Road, the GPO and Kashmir Point."
+    ],
+    [
+     "Day 2",
+     "Morning at Patriata for the chairlift and cable car. Stop at Pindi Point, then drive back to Islamabad."
+    ]
+   ],
+   "incl": [
+    "Private car with driver",
+    "1 night at Al-Maaz Hotel",
+    "Fuel, tolls and parking"
+   ],
+   "excl": [
+    "Meals, unless added to your package",
+    "Chairlift and cable car tickets"
+   ],
+   "note": null
+  },
+  {
+   "id": "galiyat",
+   "region": "Murree & Galiyat",
+   "length": "short",
+   "days": "2 days",
+   "title": "Galiyat: Ayubia and Nathia Gali",
+   "summary": "Pine forests, the Ayubia chairlift, the Pipeline Track and the ridges of Nathia Gali.",
+   "season": "All year, snow in winter",
+   "start_from": "Murree or Islamabad",
+   "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Ayubia%2C_Pakistan.jpg/960px-Ayubia%2C_Pakistan.jpg",
+   "alt": "Forested ridges of Ayubia in the Galiyat",
+   "plan": [
+    [
+     "Day 1",
+     "From Murree through Changla Gali to Ayubia for the chairlift and the Pipeline Track walk to Dunga Gali. Evening in Nathia Gali."
+    ],
+    [
+     "Day 2",
+     "Morning walk to Mukshpuri or Miranjani viewpoints, then return through Abbottabad or Murree."
+    ]
+   ],
+   "incl": [
+    "Private vehicle with driver",
+    "Fuel, tolls and parking",
+    "Hotel stays as agreed in your package",
+    "Driver's meals and stay"
+   ],
+   "excl": [
+    "Meals, unless added to your package",
+    "Entry tickets and activities",
+    "Personal expenses and tips",
+    "Ayubia chairlift"
+   ],
+   "note": null
+  },
+  {
+   "id": "hazara",
+   "region": "Hazara & Kaghan",
+   "length": "short",
+   "days": "3 days",
+   "title": "Abbottabad, Balakot and Shogran",
+   "summary": "Abbottabad, Mansehra and Balakot, then Kiwai, Shogran and the Siri Paye meadows.",
+   "season": "April to November",
+   "start_from": "Islamabad",
+   "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Siri_Paye%2C_Shogran%2C_Kaghan_Valley.jpg/960px-Siri_Paye%2C_Shogran%2C_Kaghan_Valley.jpg",
+   "alt": "Siri Paye meadow and pond above Shogran",
+   "plan": [
+    [
+     "Day 1",
+     "Islamabad to Abbottabad for Shimla Hill, then on through Mansehra to Balakot on the Kunhar River."
+    ],
+    [
+     "Day 2",
+     "Kiwai waterfall, then up to Shogran. Jeep to the Siri Paye meadows."
+    ],
+    [
+     "Day 3",
+     "Morning in Shogran, then back to Islamabad through Mansehra and Abbottabad."
+    ]
+   ],
+   "incl": [
+    "Private vehicle with driver",
+    "Fuel, tolls and parking",
+    "Hotel stays as agreed in your package",
+    "Driver's meals and stay"
+   ],
+   "excl": [
+    "Meals, unless added to your package",
+    "Entry tickets and activities",
+    "Personal expenses and tips",
+    "Jeep to Siri Paye"
+   ],
+   "note": null
+  },
+  {
+   "id": "naran",
+   "region": "Hazara & Kaghan",
+   "length": "short",
+   "days": "4 days",
+   "title": "Naran, Kaghan and Saif-ul-Malook",
+   "summary": "The Kunhar River valley, Lake Saif-ul-Malook and Babusar Top.",
+   "season": "Mid May to September",
+   "start_from": "Islamabad",
+   "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Lake_Saiful_Malook_naran_05.jpg/960px-Lake_Saiful_Malook_naran_05.jpg",
+   "alt": "Lake Saif-ul-Malook with snowy peaks reflected in the water",
+   "plan": [
+    [
+     "Day 1",
+     "Drive to Naran through Abbottabad, Mansehra and Balakot along the Kunhar River."
+    ],
+    [
+     "Day 2",
+     "Jeep to Lake Saif-ul-Malook. Afternoon at leisure in Naran."
+    ],
+    [
+     "Day 3",
+     "Lulusar Lake and Babusar Top, when the pass is open."
+    ],
+    [
+     "Day 4",
+     "Return to Islamabad, stopping at Kiwai or Shogran if time allows."
+    ]
+   ],
+   "incl": [
+    "Private vehicle with driver",
+    "Fuel, tolls and parking",
+    "Hotel stays as agreed in your package",
+    "Driver's meals and stay"
+   ],
+   "excl": [
+    "Meals, unless added to your package",
+    "Entry tickets and activities",
+    "Personal expenses and tips",
+    "Jeep to Saif-ul-Malook"
+   ],
+   "note": "The road to Naran and upper Kaghan is closed by snow in winter. In those months we suggest Kiwai and Shogran instead."
+  },
+  {
+   "id": "neelum",
+   "region": "Kashmir",
+   "length": "long",
+   "days": "5 days",
+   "title": "Neelum Valley, Kashmir",
+   "summary": "Riverside villages, Sharda and the meadows of Arang Kel.",
+   "season": "April to October",
+   "start_from": "Islamabad",
+   "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Neelum_Valley%2C_Azad_Jammu_%26_Kashmir%2C_Pakistan.jpg/960px-Neelum_Valley%2C_Azad_Jammu_%26_Kashmir%2C_Pakistan.jpg",
+   "alt": "Green slopes along the Neelum River",
+   "plan": [
+    [
+     "Day 1",
+     "Islamabad to Muzaffarabad, then up the valley to Keran."
+    ],
+    [
+     "Day 2",
+     "Continue to Sharda. Visit the Sharda ruins and riverside."
+    ],
+    [
+     "Day 3",
+     "Kel, then the chairlift and walk up to Arang Kel."
+    ],
+    [
+     "Day 4",
+     "Slow drive back down the valley with village stops."
+    ],
+    [
+     "Day 5",
+     "Return to Islamabad."
+    ]
+   ],
+   "incl": [
+    "Private vehicle with driver",
+    "Fuel, tolls and parking",
+    "Hotel stays as agreed in your package",
+    "Driver's meals and stay"
+   ],
+   "excl": [
+    "Meals, unless added to your package",
+    "Entry tickets and activities",
+    "Personal expenses and tips",
+    "Arang Kel chairlift"
+   ],
+   "note": "Foreign nationals may need extra permission for parts of Neelum. Tell us your nationality when you enquire."
+  },
+  {
+   "id": "swat",
+   "region": "Swat",
+   "length": "short",
+   "days": "4 days",
+   "title": "Swat Valley and Kalam",
+   "summary": "Malam Jabba, the Ushu forest and Mahodand Lake above Kalam.",
+   "season": "April to October, Malam Jabba also in winter",
+   "start_from": "Islamabad",
+   "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Kalam%2C_Swat_%28Pakistan%29.jpg/960px-Kalam%2C_Swat_%28Pakistan%29.jpg",
+   "alt": "The Swat River running through Kalam",
+   "plan": [
+    [
+     "Day 1",
+     "Motorway drive to Swat (about 4 hours). Evening in Mingora."
+    ],
+    [
+     "Day 2",
+     "Malam Jabba chairlift and viewpoints."
+    ],
+    [
+     "Day 3",
+     "Kalam, the Ushu forest and a jeep to Mahodand Lake in summer."
+    ],
+    [
+     "Day 4",
+     "Swat Museum and Butkara Stupa, then back to Islamabad."
+    ]
+   ],
+   "incl": [
+    "Private vehicle with driver",
+    "Fuel, tolls and parking",
+    "Hotel stays as agreed in your package",
+    "Driver's meals and stay"
+   ],
+   "excl": [
+    "Meals, unless added to your package",
+    "Entry tickets and activities",
+    "Personal expenses and tips",
+    "Jeep to Mahodand Lake"
+   ],
+   "note": null
+  },
+  {
+   "id": "skardu",
+   "region": "Gilgit-Baltistan",
+   "length": "long",
+   "days": "6 days",
+   "title": "Skardu and Deosai",
+   "summary": "Kachura lakes, Shigar Fort, the cold desert and the high Deosai plains.",
+   "season": "June to September",
+   "start_from": "Islamabad (by road or flight)",
+   "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Shangrila_resort_skardu.jpg/960px-Shangrila_resort_skardu.jpg",
+   "alt": "Lower Kachura Lake and Shangrila resort near Skardu",
+   "plan": [
+    [
+     "Day 1",
+     "Fly or drive to Skardu. Visit Lower Kachura (Shangrila) Lake."
+    ],
+    [
+     "Day 2",
+     "Upper Kachura Lake, Shigar Fort and the Sarfaranga cold desert."
+    ],
+    [
+     "Day 3",
+     "Full day on the Deosai plains and Sheosar Lake, when the road is open."
+    ],
+    [
+     "Day 4",
+     "Day trip to Khaplu Palace."
+    ],
+    [
+     "Day 5",
+     "Satpara Lake and Manthokha waterfall."
+    ],
+    [
+     "Day 6",
+     "Return to Islamabad."
+    ]
+   ],
+   "incl": [
+    "Private vehicle with driver",
+    "Fuel, tolls and parking",
+    "Hotel stays as agreed in your package",
+    "Driver's meals and stay"
+   ],
+   "excl": [
+    "Meals, unless added to your package",
+    "Entry tickets and activities",
+    "Personal expenses and tips",
+    "Flights, if you choose to fly"
+   ],
+   "note": null
+  },
+  {
+   "id": "hunza",
+   "region": "Gilgit-Baltistan",
+   "length": "long",
+   "days": "7 days",
+   "title": "Hunza and Khunjerab (China border)",
+   "summary": "Baltit and Altit forts, Attabad Lake, the Passu Cones and the China border at Khunjerab Pass.",
+   "season": "May to October",
+   "start_from": "Islamabad",
+   "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/China_Border%2C_Pakistan.jpg/960px-China_Border%2C_Pakistan.jpg",
+   "alt": "The Pakistan and China border gate at Khunjerab Pass",
+   "plan": [
+    [
+     "Day 1",
+     "Islamabad to Chilas or Naran, depending on the season and road."
+    ],
+    [
+     "Day 2",
+     "Continue on the Karakoram Highway to Hunza. Evening in Karimabad."
+    ],
+    [
+     "Day 3",
+     "Baltit and Altit forts. Sunset at Eagle's Nest viewpoint."
+    ],
+    [
+     "Day 4",
+     "Attabad Lake, Hussaini suspension bridge and the Passu Cones."
+    ],
+    [
+     "Day 5",
+     "Drive to the Pakistan and China border at Khunjerab Pass, then back to Hunza."
+    ],
+    [
+     "Day 6",
+     "Leave Hunza and drive south to Chilas or Naran."
+    ],
+    [
+     "Day 7",
+     "Return to Islamabad."
+    ]
+   ],
+   "incl": [
+    "Private vehicle with driver",
+    "Fuel, tolls and parking",
+    "Hotel stays as agreed in your package",
+    "Driver's meals and stay"
+   ],
+   "excl": [
+    "Meals, unless added to your package",
+    "Entry tickets and activities",
+    "Personal expenses and tips",
+    "Khunjerab National Park entry"
+   ],
+   "note": "Khunjerab Pass is above 4,600 metres and opens only in the warmer months. Bring your CNIC or passport."
+  },
+  {
+   "id": "fairy",
+   "region": "Gilgit-Baltistan",
+   "length": "long",
+   "days": "5 days",
+   "title": "Fairy Meadows and Nanga Parbat",
+   "summary": "A jeep ride and short trek to meadows facing Nanga Parbat, the world's ninth highest mountain.",
+   "season": "June to September",
+   "start_from": "Islamabad",
+   "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Fairy_Meadows%2C_Pakistan.jpg/960px-Fairy_Meadows%2C_Pakistan.jpg",
+   "alt": "Pine forest and meadow at Fairy Meadows below snowy peaks",
+   "plan": [
+    [
+     "Day 1",
+     "Drive to Chilas."
+    ],
+    [
+     "Day 2",
+     "Jeep from Raikot Bridge to Tatoo, then a 2 to 3 hour walk to Fairy Meadows."
+    ],
+    [
+     "Day 3",
+     "Hike towards Beyal Camp and the Nanga Parbat viewpoint."
+    ],
+    [
+     "Day 4",
+     "Walk and jeep back down. Drive to Chilas or Naran."
+    ],
+    [
+     "Day 5",
+     "Return to Islamabad."
+    ]
+   ],
+   "incl": [
+    "Private vehicle with driver",
+    "Fuel, tolls and parking",
+    "Hotel stays as agreed in your package",
+    "Driver's meals and stay",
+    "Jeep from Raikot Bridge to Tatoo"
+   ],
+   "excl": [
+    "Meals, unless added to your package",
+    "Entry tickets and activities",
+    "Personal expenses and tips",
+    "Porters, if needed"
+   ],
+   "note": null
+  },
+  {
+   "id": "islamabad",
+   "region": "City tours",
+   "length": "day",
+   "days": "Full day",
+   "title": "Islamabad City Highlights",
+   "summary": "Faisal Mosque, Pakistan Monument, Saidpur Village, Daman-e-Koh and dinner at Monal.",
+   "season": "All year",
+   "start_from": "Your hotel in Islamabad or Rawalpindi",
+   "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Ali_Mujtaba_WLM2017_FAISAL_MOSQUE_019.jpg/960px-Ali_Mujtaba_WLM2017_FAISAL_MOSQUE_019.jpg",
+   "alt": "Faisal Mosque with the Margalla Hills behind",
+   "plan": [
+    [
+     "Morning",
+     "Faisal Mosque, then the Pakistan Monument and its museum."
+    ],
+    [
+     "Midday",
+     "Lok Virsa heritage museum. Lunch or hi-tea buffet at Ramada by Wyndham if you like."
+    ],
+    [
+     "Afternoon",
+     "Saidpur Village and Daman-e-Koh viewpoint."
+    ],
+    [
+     "Evening",
+     "Dinner at Monal."
+    ]
+   ],
+   "incl": [
+    "Private car with driver for the day",
+    "Fuel and parking"
+   ],
+   "excl": [
+    "Meals, unless added to your package",
+    "Entry tickets"
+   ],
+   "note": null
+  },
+  {
+   "id": "lahore",
+   "region": "City tours",
+   "length": "day",
+   "days": "Full day",
+   "title": "Lahore Heritage and Food",
+   "summary": "Lahore Fort, Badshahi Mosque and the Walled City, ending with dinner on Food Street.",
+   "season": "October to March",
+   "start_from": "Your hotel in Lahore",
+   "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Lahore_Fort_view_from_Baradari.jpg/960px-Lahore_Fort_view_from_Baradari.jpg",
+   "alt": "Alamgiri Gate and gardens of Lahore Fort",
+   "plan": [
+    [
+     "Morning",
+     "Lahore Fort and Badshahi Mosque."
+    ],
+    [
+     "Midday",
+     "Walk through the Walled City from Delhi Gate to Wazir Khan Mosque."
+    ],
+    [
+     "Afternoon",
+     "Optional Wagah border ceremony."
+    ],
+    [
+     "Evening",
+     "Dinner on Fort Road Food Street, facing the mosque."
+    ]
+   ],
+   "incl": [
+    "Private car with driver for the day",
+    "Fuel and parking"
+   ],
+   "excl": [
+    "Meals, unless added to your package",
+    "Entry tickets"
+   ],
+   "note": null
+  }
+ ],
+ "offers": [
+  {
+   "title": "Special discount offers",
+   "body": "Ask about our current company discounts for families, school and college groups and large group bookings. Offers change with the season and are shared with you personally."
+  }
+ ],
+ "hotels": [
+  {
+   "name": "Al-Maaz Hotel",
+   "details": "The Mall, Murree. Our own hotel",
+   "icon": "star"
+  },
+  {
+   "name": "Hotel Felton",
+   "details": "Bank Road, Murree. Partner hotel",
+   "icon": "buildings"
+  },
+  {
+   "name": "Ramada by Wyndham Murree",
+   "details": "Lower Topa. Rooms and group bookings",
+   "icon": "buildings"
+  },
+  {
+   "name": "Mövenpick Centaurus",
+   "details": "Islamabad. Rooms and group bookings",
+   "icon": "buildings"
+  },
+  {
+   "name": "Galiyat and Kaghan",
+   "details": "Partner hotels in Ayubia, Nathia Gali, Shogran and Naran",
+   "icon": "tree-evergreen"
+  }
+ ],
+ "venues": [
+  {
+   "name": "Ramada by Wyndham, Islamabad",
+   "details": "Breakfast, hi-tea, lunch and dinner buffets"
+  },
+  {
+   "name": "Usmania Restaurant, Murree",
+   "details": "Buffets and group lunches and dinners"
+  },
+  {
+   "name": "Dervash Restaurant, Murree",
+   "details": "Our own restaurant on The Mall, with family seating and group bookings"
+  },
+  {
+   "name": "Galiyat and Kaghan",
+   "details": "Group dinners in Nathia Gali, Ayubia, Shogran and Naran"
+  }
+ ]
+}
