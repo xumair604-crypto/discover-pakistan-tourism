@@ -23,7 +23,7 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
 {"@type":"TravelAgency","@id":"#agency","name":"Discover Pakistan Tourism","url":"https://xumair604-crypto.github.io/discover-pakistan-tourism/","telephone":"+923005390720","email":"abdullatif.al80@gmail.com","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Hunza_Valley_HDR.jpg/1280px-Hunza_Valley_HDR.jpg","address":{"@type":"PostalAddress","streetAddress":"The Mall","addressLocality":"Murree","addressRegion":"Punjab","addressCountry":"PK"},"geo":{"@type":"GeoCoordinates","latitude":33.9076049,"longitude":73.3946995},"areaServed":"Pakistan","founder":[{"@type":"Person","name":"Abdul Latif"},{"@type":"Person","name":"Muhammad Yaseen"}]},
-{"@type":"Hotel","name":"Al-Maaz Hotel","telephone":["+923005390720","+92513413682"],"address":{"@type":"PostalAddress","streetAddress":"The Mall","addressLocality":"Murree","addressCountry":"PK"},"geo":{"@type":"GeoCoordinates","latitude":33.9076049,"longitude":73.3946995}},
+{"@type":"Hotel","name":"Al-Maaz Hotel","telephone":"+923005390720","address":{"@type":"PostalAddress","streetAddress":"The Mall","addressLocality":"Murree","addressCountry":"PK"},"geo":{"@type":"GeoCoordinates","latitude":33.9076049,"longitude":73.3946995}},
 {"@type":"Restaurant","name":"Dervash Restaurant","address":{"@type":"PostalAddress","streetAddress":"The Mall","addressLocality":"Murree","addressCountry":"PK"}}
 ]}
 </script>
@@ -78,6 +78,7 @@ i.ph{font-size:1.15em;line-height:0;vertical-align:-.15em}
 .topbar .wrap{display:flex;justify-content:space-between;gap:12px;padding:8px 0;flex-wrap:wrap}
 .topbar a{color:var(--on-brand);text-decoration:none}
 .topbar span,.topbar a{display:inline-flex;align-items:center;gap:6px}
+.topbar .promo{color:var(--accent);font-weight:600}
 .topbar .group{display:flex;gap:18px;flex-wrap:wrap}
 header.nav{position:sticky;top:0;z-index:60;background:rgb(13 47 39 / .96);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:var(--on-brand);border-bottom:1px solid rgb(255 255 255 / .08)}
 .navin{height:70px;display:flex;align-items:center;justify-content:space-between;gap:20px}
@@ -124,16 +125,68 @@ header.nav{position:sticky;top:0;z-index:60;background:rgb(13 47 39 / .96);backd
 .sectionHead{max-width:640px;margin-bottom:32px}
 .sectionHead p{color:var(--muted);margin-top:12px;font-size:16.5px}
 
-/* Destinations bento: 5 cells */
-.bento{display:grid;grid-template-columns:1.25fr 1fr 1fr;grid-template-rows:240px 240px;gap:14px}
-.dest{position:relative;overflow:hidden;border-radius:var(--radius);color:#fff;text-align:left;border:0;padding:0;background:#0d2f27}
-.dest:first-child{grid-row:span 2}
-.dest img{width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease)}
-.dest:hover img{transform:scale(1.05)}
-.dest:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgb(6 24 20 / .85),transparent 60%)}
-.dest span{position:absolute;z-index:1;left:20px;right:20px;bottom:18px}
-.dest b{display:block;font:600 24px "Playfair Display",serif}
-.dest small{font-size:14px;color:#dfe8e3}
+/* Route (ordered destinations) */
+.route{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.stop{position:relative;display:flex;flex-direction:column;text-align:left;padding:0;border:1px solid var(--line);background:var(--surface);border-radius:var(--radius);overflow:hidden;transition:transform .35s var(--ease),box-shadow .35s}
+.stop:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.stop img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.stopBody{padding:14px 16px 16px;display:flex;flex-direction:column;gap:3px}
+.stopBody b{font:600 19px "Playfair Display",serif}
+.stopBody small{font-size:14px;color:var(--muted)}
+.stopBody em{font-style:normal;font-size:13px;font-weight:600;color:var(--accent-text);display:flex;gap:6px;align-items:center;margin-top:4px}
+.num{position:absolute;top:12px;left:12px;width:32px;height:32px;border-radius:50%;background:var(--brand);color:var(--accent);display:grid;place-items:center;font:700 15px "DM Sans",sans-serif;border:1.5px solid var(--accent)}
+.cities{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.city{position:relative;height:190px;border:0;padding:0;border-radius:var(--radius);overflow:hidden;color:#fff;text-align:left;background:#0d2f27}
+.city img{width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease)}
+.city:hover img{transform:scale(1.04)}
+.city:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgb(6 24 20 / .85),rgb(6 24 20 / .15))}
+.city span{position:absolute;z-index:1;left:22px;bottom:20px;right:22px}
+.city b{display:block;font:600 24px "Playfair Display",serif}
+.city small{font-size:14.5px;color:#dfe8e3}
+
+/* Groups */
+.groups{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.groups .lead{color:var(--muted);font-size:16.5px;margin-top:14px}
+.mealPlans{margin:22px 0;padding:18px;border-radius:var(--radius);background:var(--surface2)}
+.mealPlans b{display:block;font-size:15px;margin-bottom:10px}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pills span{font-size:14px;font-weight:600;padding:6px 12px;border-radius:999px;background:var(--surface);border:1px solid var(--line)}
+.groupTypes{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.gtype{padding:20px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
+.gtype:nth-child(2),.gtype:nth-child(3){background:var(--brand);color:var(--on-brand);border-color:var(--brand)}
+.gtype:nth-child(2) p,.gtype:nth-child(3) p{color:var(--on-brand-muted)}
+.gtype i.ph{font-size:30px;color:var(--accent-text)}
+.gtype:nth-child(2) i.ph,.gtype:nth-child(3) i.ph{color:var(--accent)}
+.gtype h3{font-size:18px;margin:10px 0 6px}
+.gtype p{font-size:14.5px;color:var(--muted)}
+
+/* Offer band */
+.offer{background:var(--accent);color:var(--accent-ink)}
+.offerIn{display:grid;grid-template-columns:auto 1fr auto;gap:24px;align-items:center;padding:40px 0}
+.offerIn>i.ph{font-size:56px}
+.offerIn h2{font-size:clamp(26px,3vw,34px)}
+.offerIn p{margin-top:6px;font-size:16px;max-width:640px}
+
+/* Hotels list */
+.hotels{margin-top:40px;padding:26px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
+.hotels h3{font-size:22px;margin-bottom:14px}
+.hotelList{list-style:none;padding:0;margin:0 0 14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+.hotelList li{display:flex;gap:10px;align-items:flex-start;font-size:14.5px;color:var(--muted)}
+.hotelList li i{color:var(--accent-text);font-size:22px;margin-top:6px}
+.hotelList b{display:block;color:var(--text);font-size:15.5px}
+.hotels .small{font-size:14px;color:var(--muted);margin-bottom:12px}
+
+/* Food */
+.foodGrid{display:grid;grid-template-columns:1.2fr 1fr 1fr;grid-template-rows:230px auto;gap:14px}
+.foodGrid figure{margin:0;border-radius:var(--radius);overflow:hidden;min-height:160px}
+.foodGrid img{width:100%;height:100%;object-fit:cover}
+.f1{grid-column:1;grid-row:1 / span 2}
+.f2{grid-column:2;grid-row:1}
+.f3{grid-column:3;grid-row:1}
+.venues{grid-column:2 / span 2;grid-row:2;display:grid;grid-template-columns:1fr 1fr;gap:12px 18px;align-content:center;padding:20px;border-radius:var(--radius);background:var(--surface);border:1px solid var(--line)}
+.venue b{display:block;font-size:15.5px}
+.venue span{font-size:14px;color:var(--muted)}
+.venues .btn{grid-column:span 2;justify-self:start}
 
 /* Tours */
 .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:22px}
@@ -152,8 +205,6 @@ header.nav{position:sticky;top:0;z-index:60;background:rgb(13 47 39 / .96);backd
 .tour p{font-size:15px;color:var(--muted)}
 .season{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;color:var(--text)}
 .season i{color:var(--accent-text)}
-.price{font-weight:700;font-size:15px}
-.price small{font-weight:500;color:var(--muted)}
 .tourFoot{margin-top:auto;padding-top:12px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
 .tourFoot .actions{display:flex;gap:8px}
 .cmpLabel{display:inline-flex;gap:6px;align-items:center;font-size:13.5px;color:var(--muted)}
@@ -338,6 +389,10 @@ dialog::backdrop{background:rgb(5 20 16 / .7)}
   .tourGrid{grid-template-columns:repeat(2,1fr)}
   .seasonGrid{grid-template-columns:repeat(2,1fr)}
   .footGrid{grid-template-columns:1fr 1fr}
+  .route{grid-template-columns:repeat(2,1fr)}
+  .foodGrid{grid-template-columns:1fr 1fr;grid-template-rows:200px 200px auto}
+  .f1{grid-column:1;grid-row:1 / span 2}.f2{grid-column:2;grid-row:1}.f3{grid-column:2;grid-row:2}
+  .venues{grid-column:1 / span 2;grid-row:3}
 }
 @media (max-width:860px){
   .menu{display:block}
@@ -345,10 +400,12 @@ dialog::backdrop{background:rgb(5 20 16 / .7)}
   .navlinks.open{display:flex}
   .navlinks a{padding:12px 4px;font-size:16px}
   .navright .btn-accent{display:none}
-  .topbar .addr{display:none}
+  .topbar .promo{display:none}
   .section{padding:64px 0}
-  .bento{grid-template-columns:1fr 1fr;grid-template-rows:260px 180px 180px}
-  .dest:first-child{grid-column:span 2;grid-row:auto}
+  .groups{grid-template-columns:1fr;gap:28px}
+  .offerIn{grid-template-columns:1fr;gap:12px;padding:36px 0}
+  .offerIn>i.ph{font-size:44px}
+  .offerIn .btn{justify-self:start}
   .stay,.band .wrap,.builder,.about{grid-template-columns:1fr;gap:28px}
   .duo{grid-template-columns:1fr}
   .summary{position:static}
@@ -364,8 +421,10 @@ dialog::backdrop{background:rgb(5 20 16 / .7)}
   .plannerBox{grid-template-columns:1fr}
   .plannerBox .btn{grid-column:auto}
   .trust{grid-template-columns:1fr}
-  .bento{grid-template-columns:1fr;grid-template-rows:240px repeat(4,170px)}
-  .dest:first-child{grid-column:auto}
+  .route,.cities,.groupTypes{grid-template-columns:1fr}
+  .foodGrid{grid-template-columns:1fr 1fr;grid-template-rows:150px 150px auto}
+  .venues{grid-template-columns:1fr}
+  .venues .btn{grid-column:auto}
   .tourGrid,.seasonGrid,.grid2,.checks,.people,.incl{grid-template-columns:1fr}
   .span2{grid-column:auto}
   .dine{grid-template-columns:1fr}
@@ -390,7 +449,7 @@ dialog::backdrop{background:rgb(5 20 16 / .7)}
       <a href="https://wa.me/923005390720?text=Hello%20Discover%20Pakistan%20Tourism%2C%20I%20would%20like%20to%20plan%20a%20trip." target="_blank" rel="noopener"><i class="ph ph-whatsapp-logo" aria-hidden="true"></i>WhatsApp</a>
       <a href="mailto:abdullatif.al80@gmail.com"><i class="ph ph-envelope-simple" aria-hidden="true"></i>abdullatif.al80@gmail.com</a>
     </div>
-    <span class="addr"><i class="ph ph-map-pin" aria-hidden="true"></i>The Mall, Murree, Pakistan</span>
+    <a class="promo" href="#offers"><i class="ph ph-seal-percent" aria-hidden="true"></i>Special discount offers for families and groups</a>
   </div>
 </div>
 
@@ -398,10 +457,11 @@ dialog::backdrop{background:rgb(5 20 16 / .7)}
   <div class="wrap navin">
     <a class="brand" href="#top" aria-label="Discover Pakistan Tourism, home"><span class="logo" aria-hidden="true">DP</span><span><b>DISCOVER PAKISTAN</b><small>TOURISM &amp; HOSPITALITY</small></span></a>
     <nav class="navlinks" id="navlinks" aria-label="Main">
-      <a href="#tours">Tours</a>
       <a href="#destinations">Destinations</a>
-      <a href="#stay">Stay &amp; dine</a>
-      <a href="#travel-info">Travel info</a>
+      <a href="#tours">Tours</a>
+      <a href="#groups">Group tours</a>
+      <a href="#stay">Hotels &amp; food</a>
+      <a href="#offers">Offers</a>
       <a href="#contact">Contact</a>
     </nav>
     <div class="navright">
@@ -417,7 +477,7 @@ dialog::backdrop{background:rgb(5 20 16 / .7)}
   <div class="wrap">
     <div class="heroContent">
       <h1>Discover Pakistan with local warmth.</h1>
-      <p>Private tours, hotel stays, dining and transport across Pakistan, planned by our team in Murree.</p>
+      <p>Family trips, school and college tours, group meals and hotel stays from Murree to Hunza, planned by our team.</p>
       <div class="heroActions">
         <button class="btn btn-accent" type="button" data-enquire="General enquiry">Plan my trip <i class="ph ph-arrow-right" aria-hidden="true"></i></button>
         <a class="btn btn-ghost" href="#tours">See tours</a>
@@ -428,35 +488,42 @@ dialog::backdrop{background:rgb(5 20 16 / .7)}
 
 <div class="planner wrap">
   <form class="plannerBox" id="quickPlan" aria-label="Quick trip planner">
-    <div class="field"><label for="qpService">I need</label><select id="qpService"><option>Tour package</option><option>Hotel stay</option><option>Transportation</option><option>Restaurant enquiry</option></select></div>
-    <div class="field"><label for="qpDest">Destination</label><select id="qpDest"><option value="">Not sure yet</option><option>Murree</option><option>Hunza Valley</option><option>Skardu</option><option>Naran &amp; Kaghan</option><option>Swat</option><option>Neelum Valley, Kashmir</option><option>Fairy Meadows</option><option>Lahore</option><option>Islamabad</option></select></div>
+    <div class="field"><label for="qpService">I need</label><select id="qpService"><option>Tour package</option><option>Group tour</option><option>School / college / university tour</option><option>Hotel booking</option><option>Group meal or buffet</option><option>Transportation</option></select></div>
+    <div class="field"><label for="qpDest">Destination</label><select id="qpDest"><option value="">Not sure yet</option><option>Murree and Patriata</option><option>Galiyat: Ayubia and Nathia Gali</option><option>Abbottabad, Mansehra and Balakot</option><option>Kiwai, Shogran and Siri Paye</option><option>Naran and Kaghan</option><option>Neelum Valley, Kashmir</option><option>Swat and Kalam</option><option>Skardu</option><option>Hunza and Khunjerab (China border)</option><option>Fairy Meadows</option><option>Islamabad</option><option>Lahore</option></select></div>
     <div class="field"><label for="qpDate">Travel date</label><input id="qpDate" type="date"></div>
-    <div class="field"><label for="qpGuests">Travellers</label><select id="qpGuests"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5+</option></select></div>
+    <div class="field"><label for="qpGuests">Travellers</label><select id="qpGuests"><option>1</option><option selected>2</option><option>3 to 5</option><option>6 to 15</option><option>16 to 40</option><option>More than 40</option></select></div>
     <button class="btn btn-brand" type="submit">Plan my trip</button>
   </form>
-  <p class="plannerNote"><i class="ph ph-shield-check" aria-hidden="true"></i>No payment online. We confirm availability and price with you on WhatsApp before anything is booked.</p>
+  <p class="plannerNote"><i class="ph ph-shield-check" aria-hidden="true"></i>Rates are shared on request. Our team prepares your full package and sends it on WhatsApp or email before anything is booked.</p>
 </div>
 
 <div class="wrap trust" aria-label="Why travel with us">
-  <div class="reveal"><i class="ph ph-buildings" aria-hidden="true"></i><p><b>Our own hotel in Murree</b><span>Al-Maaz Hotel on The Mall</span></p></div>
-  <div class="reveal"><i class="ph ph-fork-knife" aria-hidden="true"></i><p><b>Dining on site</b><span>Dervash Restaurant, same address</span></p></div>
-  <div class="reveal"><i class="ph ph-steering-wheel" aria-hidden="true"></i><p><b>Private transport</b><span>Cars, SUVs and group vans with drivers</span></p></div>
-  <div class="reveal"><i class="ph ph-chats-circle" aria-hidden="true"></i><p><b>Plan directly with us</b><span>Talk to our team, not a call centre</span></p></div>
+  <div class="reveal"><i class="ph ph-buildings" aria-hidden="true"></i><p><b>Our own hotel in Murree</b><span>Al-Maaz Hotel on The Mall, plus partner hotels across the north</span></p></div>
+  <div class="reveal"><i class="ph ph-users-three" aria-hidden="true"></i><p><b>Family and group tours</b><span>Including school, college and university trips</span></p></div>
+  <div class="reveal"><i class="ph ph-bowl-food" aria-hidden="true"></i><p><b>Group meals and buffets</b><span>Breakfast, hi-tea, lunch and dinner</span></p></div>
+  <div class="reveal"><i class="ph ph-package" aria-hidden="true"></i><p><b>Complete packages</b><span>Transport, hotels and meals planned together</span></p></div>
 </div>
 
 <section class="section" id="destinations">
   <div class="wrap">
     <div class="sectionHead reveal">
       <div class="eyebrow">Where we travel</div>
-      <h2>Explore Pakistan by destination</h2>
-      <p>From the hill station we call home to the high valleys of the north and the great Mughal cities.</p>
+      <h2>From Murree to the China border</h2>
+      <p>Our destinations in the order most journeys run, starting from our home in Murree and heading north. Tap a stop to see its tours.</p>
     </div>
-    <div class="bento">
-      <button class="dest reveal" type="button" data-filter="Northern"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Attabad.jpg/960px-Attabad.jpg" alt="Turquoise Attabad Lake surrounded by mountains in Hunza" loading="lazy" decoding="async" width="960" height="720"><span><b>Hunza, Skardu and the North</b><small>Lakes, forts and the Karakoram Highway</small></span></button>
-      <button class="dest reveal" type="button" data-filter="Murree"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Muree_veiw.jpg/960px-Muree_veiw.jpg" alt="Murree town spread across green pine-covered hills" loading="lazy" decoding="async" width="960" height="540"><span><b>Murree</b><small>Our home base and hotel</small></span></button>
-      <button class="dest reveal" type="button" data-filter="Kashmir"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Neelum_Valley%2C_Azad_Jammu_%26_Kashmir%2C_Pakistan.jpg/960px-Neelum_Valley%2C_Azad_Jammu_%26_Kashmir%2C_Pakistan.jpg" alt="Forested slopes and river in Neelum Valley, Azad Kashmir" loading="lazy" decoding="async" width="960" height="640"><span><b>Kashmir</b><small>Neelum Valley and Arang Kel</small></span></button>
-      <button class="dest reveal" type="button" data-filter="Lahore"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Badshahi_Mosque_front_picture.jpg/960px-Badshahi_Mosque_front_picture.jpg" alt="Red sandstone facade and domes of Badshahi Mosque, Lahore" loading="lazy" decoding="async" width="960" height="640"><span><b>Lahore</b><small>Heritage, bazaars and food</small></span></button>
-      <button class="dest reveal" type="button" data-filter="Islamabad"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Ali_Mujtaba_WLM2017_FAISAL_MOSQUE_019.jpg/960px-Ali_Mujtaba_WLM2017_FAISAL_MOSQUE_019.jpg" alt="Faisal Mosque in Islamabad with the Margalla Hills behind" loading="lazy" decoding="async" width="960" height="604"><span><b>Islamabad</b><small>Capital sights and day trips</small></span></button>
+    <div class="route">
+      <button class="stop reveal" type="button" data-filter="Murree & Galiyat"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Muree_veiw.jpg/960px-Muree_veiw.jpg" alt="Murree town across pine-covered hills" loading="lazy" decoding="async" width="960" height="540"><span class="stopBody"><span class="num" aria-hidden="true">1</span><b>Murree</b><small>Mall Road, Kashmir Point, Patriata</small></span></button>
+      <button class="stop reveal" type="button" data-filter="Murree & Galiyat"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Ayubia%2C_Pakistan.jpg/960px-Ayubia%2C_Pakistan.jpg" alt="Forested ridges of Ayubia in the Galiyat" loading="lazy" decoding="async" width="960" height="640"><span class="stopBody"><span class="num" aria-hidden="true">2</span><b>Galiyat</b><small>Ayubia, Nathia Gali, Dunga Gali, Changla Gali</small></span></button>
+      <button class="stop reveal" type="button" data-filter="Hazara & Kaghan"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Balakot_KunharRiver.jpg/960px-Balakot_KunharRiver.jpg" alt="The Kunhar River flowing past Balakot" loading="lazy" decoding="async" width="960" height="623"><span class="stopBody"><span class="num" aria-hidden="true">3</span><b>Abbottabad, Mansehra, Balakot</b><small>The gateway to Kaghan Valley</small></span></button>
+      <button class="stop reveal" type="button" data-filter="Hazara & Kaghan"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Siri_Paye%2C_Shogran%2C_Kaghan_Valley.jpg/960px-Siri_Paye%2C_Shogran%2C_Kaghan_Valley.jpg" alt="Siri Paye meadow and pond above Shogran" loading="lazy" decoding="async" width="960" height="553"><span class="stopBody"><span class="num" aria-hidden="true">4</span><b>Kaghan Valley</b><small>Kiwai, Shogran, Siri Paye, Kaghan, Naran</small><em><i class="ph ph-snowflake" aria-hidden="true"></i>Naran and upper Kaghan close in winter</em></span></button>
+      <button class="stop reveal" type="button" data-filter="Kashmir"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Neelum_Valley%2C_Azad_Jammu_%26_Kashmir%2C_Pakistan.jpg/960px-Neelum_Valley%2C_Azad_Jammu_%26_Kashmir%2C_Pakistan.jpg" alt="Green slopes along the Neelum River" loading="lazy" decoding="async" width="960" height="640"><span class="stopBody"><span class="num" aria-hidden="true">5</span><b>Kashmir</b><small>Neelum Valley, Sharda, Arang Kel</small></span></button>
+      <button class="stop reveal" type="button" data-filter="Swat"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Kalam%2C_Swat_%28Pakistan%29.jpg/960px-Kalam%2C_Swat_%28Pakistan%29.jpg" alt="The Swat River running through Kalam" loading="lazy" decoding="async" width="960" height="636"><span class="stopBody"><span class="num" aria-hidden="true">6</span><b>Swat and Kalam</b><small>Malam Jabba, Kalam, Mahodand Lake</small></span></button>
+      <button class="stop reveal" type="button" data-filter="Gilgit-Baltistan"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Shangrila_resort_skardu.jpg/960px-Shangrila_resort_skardu.jpg" alt="Lower Kachura Lake near Skardu" loading="lazy" decoding="async" width="960" height="677"><span class="stopBody"><span class="num" aria-hidden="true">7</span><b>Skardu</b><small>Kachura lakes, Shigar, Deosai</small></span></button>
+      <button class="stop reveal" type="button" data-filter="Gilgit-Baltistan"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/China_Border%2C_Pakistan.jpg/960px-China_Border%2C_Pakistan.jpg" alt="The Pakistan and China border gate at Khunjerab Pass" loading="lazy" decoding="async" width="960" height="640"><span class="stopBody"><span class="num" aria-hidden="true">8</span><b>Hunza and the China border</b><small>Karimabad, Attabad Lake, Passu, Khunjerab Pass</small></span></button>
+    </div>
+    <div class="cities">
+      <button class="city reveal" type="button" data-filter="City tours"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Ali_Mujtaba_WLM2017_FAISAL_MOSQUE_019.jpg/960px-Ali_Mujtaba_WLM2017_FAISAL_MOSQUE_019.jpg" alt="Faisal Mosque in Islamabad with the Margalla Hills behind" loading="lazy" decoding="async" width="960" height="604"><span><b>Islamabad</b><small>Faisal Mosque, Daman-e-Koh and dinner at Monal</small></span></button>
+      <button class="city reveal" type="button" data-filter="City tours"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Badshahi_Mosque_front_picture.jpg/960px-Badshahi_Mosque_front_picture.jpg" alt="Badshahi Mosque, Lahore" loading="lazy" decoding="async" width="960" height="640"><span><b>Lahore</b><small>Heritage, bazaars and Food Street</small></span></button>
     </div>
   </div>
 </section>
@@ -465,15 +532,16 @@ dialog::backdrop{background:rgb(5 20 16 / .7)}
   <div class="wrap">
     <div class="sectionHead reveal">
       <h2>Tours and journeys</h2>
-      <p>Every tour is private and planned around your dates. Open any tour to see the day-by-day plan and what is included.</p>
+      <p>Every tour is private and planned around your dates and group. Open any tour to see the day-by-day plan and what is included.</p>
     </div>
     <div class="toolbar" role="group" aria-label="Filter tours">
       <button class="chip" type="button" data-region="All" aria-pressed="true">All tours</button>
-      <button class="chip" type="button" data-region="Murree" aria-pressed="false">Murree</button>
-      <button class="chip" type="button" data-region="Northern" aria-pressed="false">Northern areas</button>
+      <button class="chip" type="button" data-region="Murree &amp; Galiyat" aria-pressed="false">Murree &amp; Galiyat</button>
+      <button class="chip" type="button" data-region="Hazara &amp; Kaghan" aria-pressed="false">Hazara &amp; Kaghan</button>
       <button class="chip" type="button" data-region="Kashmir" aria-pressed="false">Kashmir</button>
-      <button class="chip" type="button" data-region="Lahore" aria-pressed="false">Lahore</button>
-      <button class="chip" type="button" data-region="Islamabad" aria-pressed="false">Islamabad</button>
+      <button class="chip" type="button" data-region="Swat" aria-pressed="false">Swat</button>
+      <button class="chip" type="button" data-region="Gilgit-Baltistan" aria-pressed="false">Gilgit-Baltistan</button>
+      <button class="chip" type="button" data-region="City tours" aria-pressed="false">City tours</button>
       <label class="sr-only" for="tourSearch">Search tours</label>
       <input id="tourSearch" type="search" placeholder="Search a place or activity">
       <label class="sr-only" for="tourLength">Trip length</label>
@@ -489,6 +557,37 @@ dialog::backdrop{background:rgb(5 20 16 / .7)}
   </div>
 </section>
 
+<section class="section" id="groups">
+  <div class="wrap groups">
+    <div class="reveal">
+      <h2>Group, family and student tours</h2>
+      <p class="lead">We plan trips for families, friends, offices and large groups, and study tours for schools, colleges and universities from Punjab and across Pakistan. Transport, hotels and meals come as one package.</p>
+      <div class="mealPlans">
+        <b>Meals for your group</b>
+        <div class="pills"><span>Breakfast</span><span>Hi-tea</span><span>Lunch</span><span>Dinner</span><span>Buffets</span><span>Bed and breakfast</span><span>Half board</span><span>Full board</span></div>
+      </div>
+      <button class="btn btn-brand" type="button" data-enquire="Group tour">Plan a group tour</button>
+    </div>
+    <div class="groupTypes">
+      <article class="gtype reveal"><i class="ph ph-house-line" aria-hidden="true"></i><h3>Family trips</h3><p>Comfortable pacing, family rooms and child-friendly stops.</p></article>
+      <article class="gtype reveal"><i class="ph ph-student" aria-hidden="true"></i><h3>School and college tours</h3><p>Safe transport, supervised plans and group meals for students and teachers.</p></article>
+      <article class="gtype reveal"><i class="ph ph-graduation-cap" aria-hidden="true"></i><h3>University study tours</h3><p>Northern areas, heritage cities and nature trips for university groups.</p></article>
+      <article class="gtype reveal"><i class="ph ph-users-four" aria-hidden="true"></i><h3>Large groups and offices</h3><p>Coasters, multiple rooms and group dining arranged together.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="offer" id="offers">
+  <div class="wrap offerIn reveal">
+    <i class="ph ph-seal-percent" aria-hidden="true"></i>
+    <div>
+      <h2>Special discount offers</h2>
+      <p>Ask about our current company discounts for families, school and college groups and large group bookings. Offers change with the season and are shared with you personally.</p>
+    </div>
+    <button class="btn btn-brand" type="button" data-enquire="Special offer">Ask about offers</button>
+  </div>
+</section>
+
 <section class="section" id="stay">
   <div class="wrap">
     <div class="stay">
@@ -497,41 +596,53 @@ dialog::backdrop{background:rgb(5 20 16 / .7)}
         <figcaption>The Mall, Murree. Al-Maaz Hotel and Dervash Restaurant are right on this road.</figcaption>
       </figure>
       <div class="reveal">
-        <div class="eyebrow">Stay with us in Murree</div>
+        <div class="eyebrow">Hotels and room bookings</div>
         <h2>Al-Maaz Hotel on The Mall</h2>
-        <p style="color:var(--muted);margin-top:14px;font-size:16.5px">Our own hotel puts you a short walk from Kashmir Point, the GPO and the cafes of Mall Road. Tell us your dates and group size and we will share the rooms and rates available.</p>
+        <p style="color:var(--muted);margin-top:14px;font-size:16.5px">Our own hotel puts you a short walk from Kashmir Point, the GPO and the cafes of Mall Road. We also book rooms for families and groups at partner hotels across the route.</p>
         <ul>
           <li><i class="ph ph-check-circle" aria-hidden="true"></i>Rooms for couples, families and groups</li>
           <li><i class="ph ph-check-circle" aria-hidden="true"></i>Dervash Restaurant at the same address</li>
           <li><i class="ph ph-check-circle" aria-hidden="true"></i>Easy to combine with our tours and transport</li>
           <li><i class="ph ph-check-circle" aria-hidden="true"></i>Walk to Mall Road and Kashmir Point</li>
         </ul>
-        <div class="contactLines">
-          <span>Mobile: <a href="tel:+923005390720">0300-5390720</a>, <a href="tel:+923135390720">0313-5390720</a>, <a href="tel:+923215390720">0321-5390720</a></span>
-          <span>Landline: <a href="tel:+92513413682">051-3413682</a>, <a href="tel:+92513413817">051-3413817</a>, <a href="tel:+92513413116">051-3413116</a></span>
-        </div>
         <div class="btnRow">
-          <button class="btn btn-brand" type="button" data-enquire="Al-Maaz Hotel stay" data-dest="Murree">Check rooms and rates</button>
+          <button class="btn btn-brand" type="button" data-enquire="Hotel booking" data-dest="Al-Maaz Hotel, Murree">Book a room</button>
           <a class="btn btn-line" href="https://www.google.com/maps?q=33.9076049,73.3946995" target="_blank" rel="noopener"><i class="ph ph-map-pin" aria-hidden="true"></i>Directions</a>
         </div>
       </div>
     </div>
-    <div class="duo" id="restaurant">
-      <article class="dine reveal">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Pakistani_Food_Karahi_Beef.jpg/960px-Pakistani_Food_Karahi_Beef.jpg" alt="A karahi dish served with fresh naan" loading="lazy" decoding="async" width="960" height="643">
-        <div>
-          <h3>Dervash Restaurant</h3>
-          <p>Dining for hotel guests and visitors on The Mall. Ask us for the current menu, family seating or a group booking for your tour party.</p>
-          <button class="btn btn-line btn-sm" type="button" data-enquire="Restaurant enquiry" data-dest="Murree" style="align-self:flex-start">Ask about dining</button>
-        </div>
-      </article>
-      <article class="partner reveal">
-        <span class="tag">Partner hotel</span>
-        <h3>Hotel Felton, Bank Road</h3>
-        <p>An independent hotel we work with when you prefer a stay on Bank Road. Rooms and rates are confirmed by the hotel directly.</p>
-        <p><a href="tel:+923004819765">0300-4819765</a> &nbsp; <a href="tel:+923214819765">0321-4819765</a></p>
-        <button class="btn btn-accent btn-sm" type="button" data-enquire="Hotel Felton enquiry" data-dest="Murree" style="align-self:flex-start">Contact Hotel Felton</button>
-      </article>
+    <div class="hotels reveal">
+      <h3>Hotels we book</h3>
+      <ul class="hotelList">
+        <li><i class="ph ph-star" aria-hidden="true"></i><span><b>Al-Maaz Hotel</b>The Mall, Murree. Our own hotel</span></li>
+        <li><i class="ph ph-buildings" aria-hidden="true"></i><span><b>Hotel Felton</b>Bank Road, Murree. Partner hotel</span></li>
+        <li><i class="ph ph-buildings" aria-hidden="true"></i><span><b>Ramada by Wyndham Murree</b>Lower Topa. Rooms and group bookings</span></li>
+        <li><i class="ph ph-buildings" aria-hidden="true"></i><span><b>Mövenpick Centaurus</b>Islamabad. Rooms and group bookings</span></li>
+        <li><i class="ph ph-tree-evergreen" aria-hidden="true"></i><span><b>Galiyat and Kaghan</b>Partner hotels in Ayubia, Nathia Gali, Shogran and Naran</span></li>
+      </ul>
+      <p class="small">Room availability is confirmed for your dates when you enquire.</p>
+      <button class="btn btn-line btn-sm" type="button" data-enquire="Hotel booking">Book a hotel</button>
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="food">
+  <div class="wrap">
+    <div class="sectionHead reveal">
+      <h2>Group meals and buffets</h2>
+      <p>Breakfast, hi-tea, lunch and dinner for families and groups, served at our own restaurant or at hotels and restaurants along your route.</p>
+    </div>
+    <div class="foodGrid">
+      <figure class="f1 reveal"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Buffet_brekafast_%285078306699%29.jpg/960px-Buffet_brekafast_%285078306699%29.jpg" alt="A breakfast buffet spread with fruit, bread and hot dishes" loading="lazy" decoding="async" width="960" height="640"></figure>
+      <figure class="f2 reveal"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Sindhi_Biryani.JPG/960px-Sindhi_Biryani.JPG" alt="A large platter of biryani" loading="lazy" decoding="async" width="960" height="720"></figure>
+      <figure class="f3 reveal"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Pakistani_Food_Beef_Kabobs.jpg/960px-Pakistani_Food_Beef_Kabobs.jpg" alt="Grilled kebabs with onions and green chillies" loading="lazy" decoding="async" width="960" height="643"></figure>
+      <div class="venues reveal">
+        <div class="venue"><b>Ramada by Wyndham, Islamabad</b><span>Breakfast, hi-tea, lunch and dinner buffets</span></div>
+        <div class="venue"><b>Usmania Restaurant, Murree</b><span>Buffets and group lunches and dinners</span></div>
+        <div class="venue" id="restaurant"><b>Dervash Restaurant, Murree</b><span>Our own restaurant on The Mall, with family seating and group bookings</span></div>
+        <div class="venue"><b>Galiyat and Kaghan</b><span>Group dinners in Nathia Gali, Ayubia, Shogran and Naran</span></div>
+        <button class="btn btn-brand" type="button" data-enquire="Group meal or buffet">Book a group meal</button>
+      </div>
     </div>
   </div>
 </section>
@@ -556,31 +667,44 @@ dialog::backdrop{background:rgb(5 20 16 / .7)}
   <div class="wrap">
     <div class="sectionHead reveal">
       <h2>Build your own trip</h2>
-      <p>Pick your places, transport and stay. We turn it into a day-by-day plan with a price.</p>
+      <p>Pick your places, transport and stay. We turn it into a day-by-day plan for you.</p>
     </div>
     <div class="builder">
       <form class="builderForm" id="builderForm">
         <div class="grid2">
           <div class="field"><label for="bStart">Starting city</label><select id="bStart"><option>Islamabad</option><option>Lahore</option><option>Murree</option><option>Other</option></select></div>
-          <div class="field"><label for="bFormat">Trip style</label><select id="bFormat"><option>Private tour</option><option>Family tour</option><option>Small group</option><option>Day trip</option></select></div>
-          <div class="field"><label for="bTransport">Transport</label><select id="bTransport"><option>Private car</option><option>SUV</option><option>Van or coaster</option><option>I have my own transport</option></select></div>
-          <div class="field"><label for="bStay">Hotels</label><select id="bStay"><option>Please arrange hotels</option><option>Al-Maaz Hotel in Murree</option><option>Hotel Felton in Murree</option><option>I will arrange my own</option><option>Not needed</option></select></div>
+          <div class="field"><label for="bFormat">Trip style</label><select id="bFormat"><option>Family trip</option><option>Private tour</option><option>Friends or office group</option><option>School or college tour</option><option>University study tour</option><option>Day trip</option></select></div>
+          <div class="field"><label for="bTransport">Transport</label><select id="bTransport"><option>Private car</option><option>SUV</option><option>Van or Hiace</option><option>Coaster (large groups)</option><option>Bus (school and university groups)</option><option>I have my own transport</option></select></div>
+          <div class="field"><label for="bStay">Hotels</label><select id="bStay"><option>Please arrange hotels</option><option>Al-Maaz Hotel, Murree</option><option>Hotel Felton, Murree</option><option>Ramada by Wyndham, Murree</option><option>Mövenpick Centaurus, Islamabad</option><option>I will arrange my own</option><option>Not needed</option></select></div>
           <fieldset class="span2">
             <legend>Places to include</legend>
             <div class="checks" id="bPlaces">
               <label><input type="checkbox" value="Murree and Patriata"> Murree and Patriata</label>
-              <label><input type="checkbox" value="Lahore"> Lahore heritage</label>
-              <label><input type="checkbox" value="Islamabad"> Islamabad city</label>
-              <label><input type="checkbox" value="Hunza and Passu"> Hunza and Passu</label>
-              <label><input type="checkbox" value="Skardu and Deosai"> Skardu and Deosai</label>
+              <label><input type="checkbox" value="Ayubia and Nathia Gali"> Ayubia and Nathia Gali</label>
+              <label><input type="checkbox" value="Abbottabad, Mansehra and Balakot"> Abbottabad, Mansehra, Balakot</label>
+              <label><input type="checkbox" value="Kiwai, Shogran and Siri Paye"> Kiwai, Shogran, Siri Paye</label>
               <label><input type="checkbox" value="Naran and Kaghan"> Naran and Kaghan</label>
-              <label><input type="checkbox" value="Neelum Valley"> Neelum Valley</label>
+              <label><input type="checkbox" value="Neelum Valley"> Neelum Valley, Kashmir</label>
               <label><input type="checkbox" value="Swat and Kalam"> Swat and Kalam</label>
+              <label><input type="checkbox" value="Skardu and Deosai"> Skardu and Deosai</label>
+              <label><input type="checkbox" value="Hunza and Khunjerab"> Hunza and Khunjerab</label>
+              <label><input type="checkbox" value="Islamabad"> Islamabad city</label>
+            </div>
+          </fieldset>
+          <fieldset class="span2">
+            <legend>Meals for your group</legend>
+            <div class="checks" id="bMeals">
+              <label><input type="checkbox" value="Breakfast"> Breakfast</label>
+              <label><input type="checkbox" value="Hi-tea"> Hi-tea</label>
+              <label><input type="checkbox" value="Lunch"> Lunch</label>
+              <label><input type="checkbox" value="Dinner"> Dinner</label>
+              <label><input type="checkbox" value="Buffet"> Buffet</label>
+              <label><input type="checkbox" value="Full board"> Full board</label>
             </div>
           </fieldset>
           <div class="field"><label for="bDate">Travel date</label><input id="bDate" type="date"></div>
           <div class="field"><label for="bDays">Number of days</label><input id="bDays" type="number" min="1" max="30" value="5"></div>
-          <div class="field"><label for="bGuests">Guests</label><input id="bGuests" type="number" min="1" max="60" value="2"></div>
+          <div class="field"><label for="bGuests">Guests</label><input id="bGuests" type="number" min="1" max="500" value="2"></div>
           <div class="field"><label for="bName">Your name</label><input id="bName" autocomplete="name"></div>
           <div class="field"><label for="bPhone">WhatsApp number</label><input id="bPhone" type="tel" autocomplete="tel" placeholder="+92 300 1234567"></div>
           <div class="field"><label for="bEmail">Email (optional)</label><input id="bEmail" type="email" autocomplete="email"></div>
@@ -590,12 +714,13 @@ dialog::backdrop{background:rgb(5 20 16 / .7)}
       </form>
       <aside class="summary" aria-live="polite">
         <h3>Your trip so far</h3>
-        <p>Updates as you choose. We reply with a full plan and price.</p>
+        <p>Updates as you choose. Our team replies with a full plan.</p>
         <div class="sumline"><span>Starting from</span><b id="sStart"></b></div>
         <div class="sumline"><span>Style</span><b id="sFormat"></b></div>
         <div class="sumline"><span>Transport</span><b id="sTransport"></b></div>
         <div class="sumline"><span>Hotels</span><b id="sStay"></b></div>
         <div class="sumline"><span>Places</span><b id="sPlaces"></b></div>
+        <div class="sumline"><span>Meals</span><b id="sMeals"></b></div>
         <div class="sumline"><span>Length</span><b id="sLength"></b></div>
         <div class="sumline"><span>Date</span><b id="sDate"></b></div>
       </aside>
@@ -618,9 +743,9 @@ dialog::backdrop{background:rgb(5 20 16 / .7)}
     </div>
     <div class="tabPanel" role="tabpanel" id="panel-seasons" aria-labelledby="tab-seasons">
       <div class="seasonGrid">
-        <div class="seasonCard"><b>Murree</b><span class="when">All year</span><p>Cool summers. Snow usually falls between December and February.</p></div>
+        <div class="seasonCard"><b>Murree and Galiyat</b><span class="when">All year</span><p>Cool summers. Snow in Murree, Ayubia and Nathia Gali usually falls between December and February.</p></div>
         <div class="seasonCard"><b>Hunza and Skardu</b><span class="when">April to October</span><p>Blossom in April, green summers, golden autumn colour in late October.</p></div>
-        <div class="seasonCard"><b>Naran, Deosai, Fairy Meadows</b><span class="when">June to September</span><p>High passes and plains open only once the snow clears.</p></div>
+        <div class="seasonCard"><b>Naran, Kaghan, Deosai</b><span class="when">Mid May to September</span><p>The road to Naran and upper Kaghan closes in winter. Kiwai and Shogran are good alternatives then.</p></div>
         <div class="seasonCard"><b>Lahore and Islamabad</b><span class="when">October to March</span><p>Pleasant days. Summer afternoons can pass 40°C.</p></div>
       </div>
     </div>
@@ -682,7 +807,7 @@ dialog::backdrop{background:rgb(5 20 16 / .7)}
       <iframe title="Map showing Al-Maaz Hotel on The Mall, Murree" src="https://www.google.com/maps?q=33.9076049,73.3946995&amp;z=16&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       <div>
         <p><i class="ph ph-map-pin" aria-hidden="true"></i><span><b style="color:var(--text)">Al-Maaz Hotel and Dervash Restaurant</b><br>The Mall, Murree, Punjab, Pakistan</span></p>
-        <p><i class="ph ph-phone" aria-hidden="true"></i><span><a href="tel:+923005390720">+92 300 5390720</a> or landline <a href="tel:+92513413682">051-3413682</a></span></p>
+        <p><i class="ph ph-device-mobile" aria-hidden="true"></i><span><a href="tel:+923005390720">0300-5390720</a>, <a href="tel:+923135390720">0313-5390720</a>, <a href="tel:+923215390720">0321-5390720</a></span></p>
         <p><i class="ph ph-envelope-simple" aria-hidden="true"></i><a href="mailto:abdullatif.al80@gmail.com">abdullatif.al80@gmail.com</a></p>
         <div class="btnRow" style="margin-top:6px"><a class="btn btn-wa btn-sm" href="https://wa.me/923005390720?text=Hello%20Discover%20Pakistan%20Tourism%2C%20I%20would%20like%20to%20plan%20a%20trip." target="_blank" rel="noopener"><i class="ph ph-whatsapp-logo" aria-hidden="true"></i>WhatsApp us</a><a class="btn btn-line btn-sm" href="https://www.google.com/maps?q=33.9076049,73.3946995" target="_blank" rel="noopener">Directions</a></div>
       </div>
@@ -694,10 +819,13 @@ dialog::backdrop{background:rgb(5 20 16 / .7)}
   <div class="wrap">
     <div class="sectionHead reveal"><h2>Frequently asked questions</h2></div>
     <div class="faqs">
-      <details><summary>How do I book a tour? <i class="ph ph-plus" aria-hidden="true"></i></summary><p>Send us your dates, group size and the places you want to see, using any enquiry button or the trip builder. We reply on WhatsApp with a plan and price. Once you are happy, we confirm the booking in writing.</p></details>
+      <details><summary>How do I book a tour? <i class="ph ph-plus" aria-hidden="true"></i></summary><p>Send us your dates, group size and the places you want to see, using any enquiry button or the trip builder. Our team discusses your request and prepares a complete package with transport, hotels and meals, then sends it to you with rates on WhatsApp or email. Once you are happy, we confirm the booking in writing.</p></details>
+      <details><summary>Why are prices not shown on the website? <i class="ph ph-plus" aria-hidden="true"></i></summary><p>Every trip is different. Rates depend on your dates, group size, hotels, vehicles and meals, so our team prepares a price for your exact request and shares it with you directly.</p></details>
+      <details><summary>Do you arrange school, college and university tours? <i class="ph ph-plus" aria-hidden="true"></i></summary><p>Yes. We plan study and leisure tours for students and staff, with suitable transport, group rooms and group meals. Ask about our special discounts for educational groups.</p></details>
+      <details><summary>Can you arrange group meals and buffets? <i class="ph ph-plus" aria-hidden="true"></i></summary><p>Yes. We arrange breakfast, hi-tea, lunch and dinner for groups, including buffets at Ramada by Wyndham in Islamabad, Usmania Restaurant in Murree and our own Dervash Restaurant.</p></details>
       <details><summary>Do I pay on this website? <i class="ph ph-plus" aria-hidden="true"></i></summary><p>No. Nothing is charged online. Payment terms, including any advance, are shared with your written quote before you commit.</p></details>
       <details><summary>Can I change or cancel my trip? <i class="ph ph-plus" aria-hidden="true"></i></summary><p>Yes. Cancellation terms depend on the hotels and transport booked for your dates and are written on your quote. If roads or flights close because of weather, we work with you to reroute or reschedule.</p></details>
-      <details><summary>Is Hotel Felton owned by Discover Pakistan Tourism? <i class="ph ph-plus" aria-hidden="true"></i></summary><p>No. Hotel Felton on Bank Road is an independent partner hotel. Al-Maaz Hotel and Dervash Restaurant on The Mall are our own.</p></details>
+      <details><summary>Which hotels can you book? <i class="ph ph-plus" aria-hidden="true"></i></summary><p>Our own Al-Maaz Hotel on The Mall, Murree, our partner Hotel Felton on Bank Road, Ramada by Wyndham Murree, Mövenpick Centaurus Islamabad and partner hotels in Ayubia, Nathia Gali, Shogran and Naran.</p></details>
       <details><summary>Can I book transport only? <i class="ph ph-plus" aria-hidden="true"></i></summary><p>Yes. Share your pickup point, destination, date, number of passengers and luggage, and we will quote for a car, SUV or van with a driver.</p></details>
       <details><summary>Do you arrange trips for foreign visitors? <i class="ph ph-plus" aria-hidden="true"></i></summary><p>Yes. Tell us your nationality when you enquire so we can check whether any area on your route needs extra permission, and we can provide an itinerary for your visa application.</p></details>
     </div>
@@ -708,7 +836,7 @@ dialog::backdrop{background:rgb(5 20 16 / .7)}
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Nanga_Parbat_The_Killer_Mountain.jpg/1920px-Nanga_Parbat_The_Killer_Mountain.jpg" alt="Nanga Parbat reflected in a still mountain lake" loading="lazy" decoding="async" width="1920" height="1739">
   <div class="wrap reveal">
     <h2>Tell us where you want to go.</h2>
-    <p>Share your dates and who is travelling. We will come back with a plan and a price.</p>
+    <p>Share your dates and who is travelling. Our team will come back to you with a plan.</p>
     <div class="btnRow">
       <button class="btn btn-accent" type="button" data-enquire="General enquiry">Plan my trip</button>
       <a class="btn btn-ghost" href="https://wa.me/923005390720?text=Hello%20Discover%20Pakistan%20Tourism%2C%20I%20would%20like%20to%20plan%20a%20trip." target="_blank" rel="noopener"><i class="ph ph-whatsapp-logo" aria-hidden="true"></i>WhatsApp us</a>
@@ -727,9 +855,9 @@ dialog::backdrop{background:rgb(5 20 16 / .7)}
       <div><h4>Explore</h4><div class="footLinks"><a href="#tours">Tours</a><a href="#destinations">Destinations</a><a href="#stay">Al-Maaz Hotel</a><a href="#restaurant">Dervash Restaurant</a><a href="#transport">Transport</a><a href="#custom">Build your trip</a><a href="#guides">Travel guides</a></div></div>
       <div><h4>Help</h4><div class="footLinks"><a href="#travel-info">Travel information</a><a href="#faq">FAQs</a><a href="#about">About us</a><button class="linkBtn" type="button" data-policy="privacy">Privacy policy</button><button class="linkBtn" type="button" data-policy="terms">Booking terms</button></div></div>
       <div>
-        <h4>Al-Maaz and main enquiries</h4>
+        <h4>Mobile and WhatsApp</h4>
         <div class="footLinks"><a href="tel:+923005390720">+92 300 5390720</a><a href="tel:+923135390720">+92 313 5390720</a><a href="tel:+923215390720">+92 321 5390720</a><a href="mailto:abdullatif.al80@gmail.com">abdullatif.al80@gmail.com</a></div>
-        <h4 style="margin-top:18px">Hotel Felton (partner)</h4>
+        <h4 style="margin-top:18px">Hotel Felton (partner hotel)</h4>
         <div class="footLinks"><a href="tel:+923004819765">+92 300 4819765</a><a href="tel:+923214819765">+92 321 4819765</a><span>Bank Road, Murree</span></div>
       </div>
     </div>
@@ -751,15 +879,15 @@ dialog::backdrop{background:rgb(5 20 16 / .7)}
     <div class="grid2">
       <div class="field"><label for="eName">Your name</label><input id="eName" name="Name" autocomplete="name" required><span class="err">Please enter your name.</span></div>
       <div class="field"><label for="ePhone">WhatsApp number</label><input id="ePhone" name="Phone" type="tel" autocomplete="tel" placeholder="+92 300 1234567" required><span class="err">Please enter a number we can reach.</span></div>
-      <div class="field"><label for="eService">I need</label><select id="eService" name="Service"><option>Tour package</option><option>Hotel stay</option><option>Al-Maaz Hotel stay</option><option>Hotel Felton enquiry</option><option>Transportation</option><option>Restaurant enquiry</option><option>General enquiry</option></select></div>
+      <div class="field"><label for="eService">I need</label><select id="eService" name="Service"><option>Tour package</option><option>Group tour</option><option>School / college / university tour</option><option>Hotel booking</option><option>Hotel Felton enquiry</option><option>Group meal or buffet</option><option>Restaurant enquiry</option><option>Transportation</option><option>Special offer</option><option>General enquiry</option></select></div>
       <div class="field"><label for="eDest">Destination or tour</label><input id="eDest" name="Destination" placeholder="Hunza, Murree, not sure yet"></div>
       <div class="field"><label for="eDate">Travel date</label><input id="eDate" name="Date" type="date"></div>
-      <div class="field"><label for="eGuests">Guests</label><select id="eGuests" name="Guests"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5 to 9</option><option>10 or more</option></select></div>
+      <div class="field"><label for="eGuests">Guests</label><select id="eGuests" name="Guests"><option>1</option><option selected>2</option><option>3 to 5</option><option>6 to 15</option><option>16 to 40</option><option>More than 40</option></select></div>
       <div class="field"><label for="eEmail">Email (optional)</label><input id="eEmail" name="Email" type="email" autocomplete="email"></div>
       <div class="field"><label for="eFrom">Travelling from</label><input id="eFrom" name="From" placeholder="City or country"></div>
       <div class="field span2"><label for="eMsg">Anything else?</label><textarea id="eMsg" name="Message" rows="3" placeholder="Pickup point, room needs, special requests"></textarea></div>
     </div>
-    <p class="notice"><i class="ph ph-info" aria-hidden="true"></i><span>Sending opens WhatsApp with your details filled in, so you can check them before you press send. Nothing is booked until we confirm with you.</span></p>
+    <p class="notice"><i class="ph ph-info" aria-hidden="true"></i><span>Sending opens WhatsApp with your details filled in. Our team discusses your request and sends you a complete package with rates on WhatsApp or email. Nothing is booked until you confirm.</span></p>
     <button class="btn btn-wa" type="submit" style="width:100%"><i class="ph ph-whatsapp-logo" aria-hidden="true"></i>Continue on WhatsApp</button>
   </form>
 </dialog>
@@ -776,11 +904,14 @@ dialog::backdrop{background:rgb(5 20 16 / .7)}
 <script>
 /* =====================================================================
    EDIT YOUR TOURS HERE.
-   To show a price, fill in `price` (for example "45,000"). It then shows
-   as "From PKR 45,000 per person". Leave it empty to show
-   "Ask for today's price".
+   Prices are deliberately NOT shown on the website. The owners share
+   the cost with each customer directly.
    ===================================================================== */
 const IMG = {
+  ayubia:"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Ayubia%2C_Pakistan.jpg/960px-Ayubia%2C_Pakistan.jpg",
+  siripaye:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Siri_Paye%2C_Shogran%2C_Kaghan_Valley.jpg/960px-Siri_Paye%2C_Shogran%2C_Kaghan_Valley.jpg",
+  khunjerab:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/China_Border%2C_Pakistan.jpg/960px-China_Border%2C_Pakistan.jpg",
+  kalam:"https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Kalam%2C_Swat_%28Pakistan%29.jpg/960px-Kalam%2C_Swat_%28Pakistan%29.jpg",
   patriata:"https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Patriatta_%28cropped%29.jpg/960px-Patriatta_%28cropped%29.jpg",
   baltit:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Baltit_Fort%2C_Karimabad%2C_Hunza%2C_Gilgit_Baltistan.jpg/960px-Baltit_Fort%2C_Karimabad%2C_Hunza%2C_Gilgit_Baltistan.jpg",
   shangrila:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Shangrila_resort_skardu.jpg/960px-Shangrila_resort_skardu.jpg",
@@ -795,56 +926,70 @@ const IMG = {
   foodStreet:"https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Night_View_of_Lahore_Fort_Food_Street.JPG/960px-Night_View_of_Lahore_Fort_Food_Street.JPG",
   sharda:"https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/View_From_Sharda_Fort%2C_Azad_Jammu_%26_Kashmir%2C_Pakistan.jpg/960px-View_From_Sharda_Fort%2C_Azad_Jammu_%26_Kashmir%2C_Pakistan.jpg"
 };
-const STD_INCL = ["Private vehicle with driver","Fuel, tolls and parking","Hotel stays as agreed in your quote","Driver's meals and stay"];
-const STD_EXCL = ["Your meals, unless stated","Entry tickets and activities","Personal expenses and tips"];
+const STD_INCL = ["Private vehicle with driver","Fuel, tolls and parking","Hotel stays as agreed in your package","Driver's meals and stay"];
+const STD_EXCL = ["Meals, unless added to your package","Entry tickets and activities","Personal expenses and tips"];
 
+/* Tours are listed in route order: Murree, Galiyat, Hazara and Kaghan,
+   Kashmir, Swat, Gilgit-Baltistan, then city tours. */
 const TOURS = [
- {id:"murree",region:"Murree",length:"short",days:"2 days",title:"Murree Hills and Patriata Escape",img:IMG.patriata,alt:"Patriata cable car cabins above forested hills near Murree",
+ {id:"murree",region:"Murree & Galiyat",length:"short",days:"2 days",title:"Murree Hills and Patriata",img:IMG.patriata,alt:"Patriata cable car cabins above forested hills near Murree",
   summary:"Mall Road, Kashmir Point and the Patriata chairlift, with a night at our own hotel on The Mall.",
-  season:"All year",start:"Islamabad or Rawalpindi",price:"",
+  season:"All year, snow in winter",start:"Islamabad or Rawalpindi",
   plan:[["Day 1","Drive from Islamabad (about 1.5 hours). Check in at Al-Maaz Hotel on The Mall. Evening walk along Mall Road, the GPO and Kashmir Point."],["Day 2","Morning at Patriata for the chairlift and cable car. Stop at Pindi Point, then drive back to Islamabad."]],
-  incl:["Private car with driver","1 night at Al-Maaz Hotel","Fuel, tolls and parking"],excl:["Meals","Chairlift and cable car tickets"]},
- {id:"hunza",region:"Northern",length:"long",days:"6 days",title:"Hunza Valley Discovery",img:IMG.baltit,alt:"Baltit Fort above Karimabad with mountains behind",
-  summary:"Baltit and Altit forts, Attabad Lake and the Passu Cones on the Karakoram Highway.",
-  season:"April to October",start:"Islamabad",price:"",
-  plan:[["Day 1","Islamabad to Chilas or Naran, depending on the season and road."],["Day 2","Continue on the Karakoram Highway to Hunza. Evening in Karimabad."],["Day 3","Baltit and Altit forts. Sunset at Eagle's Nest viewpoint."],["Day 4","Attabad Lake, Hussaini suspension bridge and the Passu Cones. Optional drive to Khunjerab Pass."],["Day 5","Leave Hunza and drive south to Chilas or Naran."],["Day 6","Return to Islamabad."]],
-  incl:STD_INCL,excl:STD_EXCL},
- {id:"skardu",region:"Northern",length:"long",days:"6 days",title:"Skardu and Deosai",img:IMG.shangrila,alt:"Lower Kachura Lake and Shangrila resort near Skardu",
-  summary:"Kachura lakes, Shigar Fort, the cold desert and the high Deosai plains.",
-  season:"June to September",start:"Islamabad (by road or flight)",price:"",
-  plan:[["Day 1","Fly or drive to Skardu. Visit Lower Kachura (Shangrila) Lake."],["Day 2","Upper Kachura Lake, Shigar Fort and the Sarfaranga cold desert."],["Day 3","Full day on the Deosai plains and Sheosar Lake, when the road is open."],["Day 4","Day trip to Khaplu Palace."],["Day 5","Satpara Lake and Manthokha waterfall."],["Day 6","Return to Islamabad."]],
-  incl:STD_INCL,excl:STD_EXCL.concat(["Flights, if you choose to fly"])},
- {id:"naran",region:"Northern",length:"short",days:"4 days",title:"Naran, Kaghan and Saif-ul-Malook",img:IMG.saif,alt:"Lake Saif-ul-Malook with snowy peaks reflected in the water",
+  incl:["Private car with driver","1 night at Al-Maaz Hotel","Fuel, tolls and parking"],excl:["Meals, unless added to your package","Chairlift and cable car tickets"]},
+ {id:"galiyat",region:"Murree & Galiyat",length:"short",days:"2 days",title:"Galiyat: Ayubia and Nathia Gali",img:IMG.ayubia,alt:"Forested ridges of Ayubia in the Galiyat",
+  summary:"Pine forests, the Ayubia chairlift, the Pipeline Track and the ridges of Nathia Gali.",
+  season:"All year, snow in winter",start:"Murree or Islamabad",
+  plan:[["Day 1","From Murree through Changla Gali to Ayubia for the chairlift and the Pipeline Track walk to Dunga Gali. Evening in Nathia Gali."],["Day 2","Morning walk to Mukshpuri or Miranjani viewpoints, then return through Abbottabad or Murree."]],
+  incl:STD_INCL,excl:STD_EXCL.concat(["Ayubia chairlift"])},
+ {id:"hazara",region:"Hazara & Kaghan",length:"short",days:"3 days",title:"Abbottabad, Balakot and Shogran",img:IMG.siripaye,alt:"Siri Paye meadow and pond above Shogran",
+  summary:"Abbottabad, Mansehra and Balakot, then Kiwai, Shogran and the Siri Paye meadows.",
+  season:"April to November",start:"Islamabad",
+  plan:[["Day 1","Islamabad to Abbottabad for Shimla Hill, then on through Mansehra to Balakot on the Kunhar River."],["Day 2","Kiwai waterfall, then up to Shogran. Jeep to the Siri Paye meadows."],["Day 3","Morning in Shogran, then back to Islamabad through Mansehra and Abbottabad."]],
+  incl:STD_INCL,excl:STD_EXCL.concat(["Jeep to Siri Paye"])},
+ {id:"naran",region:"Hazara & Kaghan",length:"short",days:"4 days",title:"Naran, Kaghan and Saif-ul-Malook",img:IMG.saif,alt:"Lake Saif-ul-Malook with snowy peaks reflected in the water",
   summary:"The Kunhar River valley, Lake Saif-ul-Malook and Babusar Top.",
-  season:"Mid May to September",start:"Islamabad",price:"",
-  plan:[["Day 1","Drive to Naran through Balakot along the Kunhar River."],["Day 2","Jeep to Lake Saif-ul-Malook. Afternoon at leisure in Naran."],["Day 3","Lulusar Lake and Babusar Top, when the pass is open."],["Day 4","Return to Islamabad, with a stop in Shogran or Kiwai if time allows."]],
-  incl:STD_INCL,excl:STD_EXCL.concat(["Jeep to Saif-ul-Malook"])},
+  season:"Mid May to September",start:"Islamabad",
+  plan:[["Day 1","Drive to Naran through Abbottabad, Mansehra and Balakot along the Kunhar River."],["Day 2","Jeep to Lake Saif-ul-Malook. Afternoon at leisure in Naran."],["Day 3","Lulusar Lake and Babusar Top, when the pass is open."],["Day 4","Return to Islamabad, stopping at Kiwai or Shogran if time allows."]],
+  incl:STD_INCL,excl:STD_EXCL.concat(["Jeep to Saif-ul-Malook"]),
+  note:"The road to Naran and upper Kaghan is closed by snow in winter. In those months we suggest Kiwai and Shogran instead."},
  {id:"neelum",region:"Kashmir",length:"long",days:"5 days",title:"Neelum Valley, Kashmir",img:IMG.neelum,alt:"Green slopes along the Neelum River",
   summary:"Riverside villages, Sharda and the meadows of Arang Kel.",
-  season:"April to October",start:"Islamabad",price:"",
+  season:"April to October",start:"Islamabad",
   plan:[["Day 1","Islamabad to Muzaffarabad, then up the valley to Keran."],["Day 2","Continue to Sharda. Visit the Sharda ruins and riverside."],["Day 3","Kel, then the chairlift and walk up to Arang Kel."],["Day 4","Slow drive back down the valley with village stops."],["Day 5","Return to Islamabad."]],
   incl:STD_INCL,excl:STD_EXCL.concat(["Arang Kel chairlift"]),
   note:"Foreign nationals may need extra permission for parts of Neelum. Tell us your nationality when you enquire."},
- {id:"lahore",region:"Lahore",length:"day",days:"Full day",title:"Lahore Heritage and Food",img:IMG.lahoreFort,alt:"Alamgiri Gate and gardens of Lahore Fort",
-  summary:"Lahore Fort, Badshahi Mosque and the Walled City, ending with dinner on Food Street.",
-  season:"October to March",start:"Your hotel in Lahore",price:"",
-  plan:[["Morning","Lahore Fort and Badshahi Mosque."],["Midday","Walk through the Walled City from Delhi Gate to Wazir Khan Mosque."],["Afternoon","Optional Wagah border ceremony."],["Evening","Dinner on Fort Road Food Street, facing the mosque."]],
-  incl:["Private car with driver for the day","Fuel and parking"],excl:["Meals","Entry tickets"]},
- {id:"islamabad",region:"Islamabad",length:"day",days:"Full day",title:"Islamabad City Highlights",img:IMG.faisal,alt:"Faisal Mosque with the Margalla Hills behind",
-  summary:"Faisal Mosque, Pakistan Monument, Saidpur Village and the view from Daman-e-Koh.",
-  season:"All year",start:"Your hotel in Islamabad or Rawalpindi",price:"",
-  plan:[["Morning","Faisal Mosque, then the Pakistan Monument and its museum."],["Midday","Lok Virsa heritage museum and lunch."],["Afternoon","Saidpur Village and Daman-e-Koh viewpoint."],["Evening","Optional dinner at Pir Sohawa in the Margalla Hills."]],
-  incl:["Private car with driver for the day","Fuel and parking"],excl:["Meals","Entry tickets"]},
- {id:"swat",region:"Northern",length:"short",days:"4 days",title:"Swat Valley and Kalam",img:IMG.mahodand,alt:"Mahodand Lake surrounded by pine forest above Kalam",
+ {id:"swat",region:"Swat",length:"short",days:"4 days",title:"Swat Valley and Kalam",img:IMG.kalam,alt:"The Swat River running through Kalam",
   summary:"Malam Jabba, the Ushu forest and Mahodand Lake above Kalam.",
-  season:"April to October, Malam Jabba also in winter",start:"Islamabad",price:"",
+  season:"April to October, Malam Jabba also in winter",start:"Islamabad",
   plan:[["Day 1","Motorway drive to Swat (about 4 hours). Evening in Mingora."],["Day 2","Malam Jabba chairlift and viewpoints."],["Day 3","Kalam, the Ushu forest and a jeep to Mahodand Lake in summer."],["Day 4","Swat Museum and Butkara Stupa, then back to Islamabad."]],
   incl:STD_INCL,excl:STD_EXCL.concat(["Jeep to Mahodand Lake"])},
- {id:"fairy",region:"Northern",length:"long",days:"5 days",title:"Fairy Meadows and Nanga Parbat",img:IMG.fairy,alt:"Pine forest and meadow at Fairy Meadows below snowy peaks",
+ {id:"skardu",region:"Gilgit-Baltistan",length:"long",days:"6 days",title:"Skardu and Deosai",img:IMG.shangrila,alt:"Lower Kachura Lake and Shangrila resort near Skardu",
+  summary:"Kachura lakes, Shigar Fort, the cold desert and the high Deosai plains.",
+  season:"June to September",start:"Islamabad (by road or flight)",
+  plan:[["Day 1","Fly or drive to Skardu. Visit Lower Kachura (Shangrila) Lake."],["Day 2","Upper Kachura Lake, Shigar Fort and the Sarfaranga cold desert."],["Day 3","Full day on the Deosai plains and Sheosar Lake, when the road is open."],["Day 4","Day trip to Khaplu Palace."],["Day 5","Satpara Lake and Manthokha waterfall."],["Day 6","Return to Islamabad."]],
+  incl:STD_INCL,excl:STD_EXCL.concat(["Flights, if you choose to fly"])},
+ {id:"hunza",region:"Gilgit-Baltistan",length:"long",days:"7 days",title:"Hunza and Khunjerab (China border)",img:IMG.khunjerab,alt:"The Pakistan and China border gate at Khunjerab Pass",
+  summary:"Baltit and Altit forts, Attabad Lake, the Passu Cones and the China border at Khunjerab Pass.",
+  season:"May to October",start:"Islamabad",
+  plan:[["Day 1","Islamabad to Chilas or Naran, depending on the season and road."],["Day 2","Continue on the Karakoram Highway to Hunza. Evening in Karimabad."],["Day 3","Baltit and Altit forts. Sunset at Eagle's Nest viewpoint."],["Day 4","Attabad Lake, Hussaini suspension bridge and the Passu Cones."],["Day 5","Drive to the Pakistan and China border at Khunjerab Pass, then back to Hunza."],["Day 6","Leave Hunza and drive south to Chilas or Naran."],["Day 7","Return to Islamabad."]],
+  incl:STD_INCL,excl:STD_EXCL.concat(["Khunjerab National Park entry"]),
+  note:"Khunjerab Pass is above 4,600 metres and opens only in the warmer months. Bring your CNIC or passport."},
+ {id:"fairy",region:"Gilgit-Baltistan",length:"long",days:"5 days",title:"Fairy Meadows and Nanga Parbat",img:IMG.fairy,alt:"Pine forest and meadow at Fairy Meadows below snowy peaks",
   summary:"A jeep ride and short trek to meadows facing Nanga Parbat, the world's ninth highest mountain.",
-  season:"June to September",start:"Islamabad",price:"",
+  season:"June to September",start:"Islamabad",
   plan:[["Day 1","Drive to Chilas."],["Day 2","Jeep from Raikot Bridge to Tatoo, then a 2 to 3 hour walk to Fairy Meadows."],["Day 3","Hike towards Beyal Camp and the Nanga Parbat viewpoint."],["Day 4","Walk and jeep back down. Drive to Chilas or Naran."],["Day 5","Return to Islamabad."]],
-  incl:STD_INCL.concat(["Jeep from Raikot Bridge to Tatoo"]),excl:STD_EXCL.concat(["Porters, if needed"])}
+  incl:STD_INCL.concat(["Jeep from Raikot Bridge to Tatoo"]),excl:STD_EXCL.concat(["Porters, if needed"])},
+ {id:"islamabad",region:"City tours",length:"day",days:"Full day",title:"Islamabad City Highlights",img:IMG.faisal,alt:"Faisal Mosque with the Margalla Hills behind",
+  summary:"Faisal Mosque, Pakistan Monument, Saidpur Village, Daman-e-Koh and dinner at Monal.",
+  season:"All year",start:"Your hotel in Islamabad or Rawalpindi",
+  plan:[["Morning","Faisal Mosque, then the Pakistan Monument and its museum."],["Midday","Lok Virsa heritage museum. Lunch or hi-tea buffet at Ramada by Wyndham if you like."],["Afternoon","Saidpur Village and Daman-e-Koh viewpoint."],["Evening","Dinner at Monal."]],
+  incl:["Private car with driver for the day","Fuel and parking"],excl:["Meals, unless added to your package","Entry tickets"]},
+ {id:"lahore",region:"City tours",length:"day",days:"Full day",title:"Lahore Heritage and Food",img:IMG.lahoreFort,alt:"Alamgiri Gate and gardens of Lahore Fort",
+  summary:"Lahore Fort, Badshahi Mosque and the Walled City, ending with dinner on Food Street.",
+  season:"October to March",start:"Your hotel in Lahore",
+  plan:[["Morning","Lahore Fort and Badshahi Mosque."],["Midday","Walk through the Walled City from Delhi Gate to Wazir Khan Mosque."],["Afternoon","Optional Wagah border ceremony."],["Evening","Dinner on Fort Road Food Street, facing the mosque."]],
+  incl:["Private car with driver for the day","Fuel and parking"],excl:["Meals, unless added to your package","Entry tickets"]}
 ];
 
 const GUIDES = {
@@ -878,7 +1023,7 @@ const POLICIES = {
   <h3>Contact</h3><p>To ask what we hold about you or to have it deleted, email abdullatif.al80@gmail.com.</p>`},
  terms:{title:"Booking terms",body:`
   <p>These terms explain how bookings work. Your written quote sets out the details for your specific trip.</p>
-  <h3>Quotes and confirmation</h3><p>Prices depend on dates, group size, vehicles and hotels. A booking is confirmed only when we confirm it to you in writing on WhatsApp or email.</p>
+  <h3>Quotes and confirmation</h3><p>Costs depend on dates, group size, vehicles and hotels, and are shared with you directly by our team. A booking is confirmed only when we confirm it to you in writing on WhatsApp or email.</p>
   <h3>Payment</h3><p>No payment is taken on this website. Any advance and the payment method are agreed with you before you commit.</p>
   <h3>Changes and cancellations</h3><p>Cancellation charges depend on the hotels and transport reserved for you and are stated on your quote. Please tell us about changes as early as possible.</p>
   <h3>Weather and road closures</h3><p>Mountain roads and flights can close because of weather or landslides. We will work with you to reroute or reschedule. Extra costs caused by closures, such as an additional night, are agreed with you at the time.</p>
@@ -886,26 +1031,24 @@ const POLICIES = {
 };
 
 const CREDITS = [
- "Hunza_Valley_HDR.jpg","Attabad.jpg","Muree_veiw.jpg","Murree_Mall.jpg","Patriatta_(cropped).jpg","Baltit_Fort,_Karimabad,_Hunza,_Gilgit_Baltistan.jpg","Pasu_cones.jpg","Shangrila_resort_skardu.jpg","Lake_Saiful_Malook_naran_05.jpg","Neelum_Valley,_Azad_Jammu_&_Kashmir,_Pakistan.jpg","View_From_Sharda_Fort,_Azad_Jammu_&_Kashmir,_Pakistan.jpg","Badshahi_Mosque_front_picture.jpg","Lahore_Fort_view_from_Baradari.jpg","Night_View_of_Lahore_Fort_Food_Street.JPG","Ali_Mujtaba_WLM2017_FAISAL_MOSQUE_019.jpg","Mahodand_l.jpg","Fairy_Meadows,_Pakistan.jpg","Nanga_Parbat_The_Killer_Mountain.jpg","Karakorum-carretera-d08.jpg","Pakistani_Food_Karahi_Beef.jpg"
+ "Hunza_Valley_HDR.jpg","Muree_veiw.jpg","Murree_Mall.jpg","Patriatta_(cropped).jpg","Baltit_Fort,_Karimabad,_Hunza,_Gilgit_Baltistan.jpg","Pasu_cones.jpg","Shangrila_resort_skardu.jpg","Lake_Saiful_Malook_naran_05.jpg","Neelum_Valley,_Azad_Jammu_&_Kashmir,_Pakistan.jpg","View_From_Sharda_Fort,_Azad_Jammu_&_Kashmir,_Pakistan.jpg","Badshahi_Mosque_front_picture.jpg","Lahore_Fort_view_from_Baradari.jpg","Night_View_of_Lahore_Fort_Food_Street.JPG","Ali_Mujtaba_WLM2017_FAISAL_MOSQUE_019.jpg","Mahodand_l.jpg","Fairy_Meadows,_Pakistan.jpg","Nanga_Parbat_The_Killer_Mountain.jpg","Karakorum-carretera-d08.jpg","Ayubia,_Pakistan.jpg","Balakot_KunharRiver.jpg","Siri_Paye,_Shogran,_Kaghan_Valley.jpg","China_Border,_Pakistan.jpg","Kalam,_Swat_(Pakistan).jpg","Sindhi_Biryani.JPG","Buffet_brekafast_(5078306699).jpg","Pakistani_Food_Beef_Kabobs.jpg","Deosai_pic_hd.jpg"
 ];
 
 const WA_MAIN = "923005390720", WA_FELTON = "923004819765";
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
 const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const priceText = t => t.price ? `From PKR ${esc(t.price)} <small>per person</small>` : `<small>Ask for today's price</small>`;
 const openWA = (num, lines) => window.open(`https://wa.me/${num}?text=${encodeURIComponent(lines.join("\n"))}`, "_blank", "noopener");
 
 /* Tours */
 function renderTours(){
   $("#tourGrid").innerHTML = TOURS.map(t => `
-   <article class="tour reveal" data-id="${t.id}" data-region="${t.region}" data-length="${t.length}" data-search="${esc((t.title+" "+t.summary+" "+t.plan.map(p=>p[1]).join(" ")).toLowerCase())}">
+   <article class="tour reveal" data-id="${t.id}" data-region="${esc(t.region)}" data-length="${t.length}" data-search="${esc((t.title+" "+t.summary+" "+t.plan.map(p=>p[1]).join(" ")).toLowerCase())}">
      <img src="${t.img}" alt="${esc(t.alt)}" loading="lazy" decoding="async" width="960" height="640">
      <div class="tourBody">
-       <div class="tourMeta"><span>${t.region === "Northern" ? "Northern areas" : t.region}</span><span>${t.days}</span></div>
+       <div class="tourMeta"><span>${esc(t.region)}</span><span>${t.days}</span></div>
        <h3>${esc(t.title)}</h3>
        <p>${esc(t.summary)}</p>
        <span class="season"><i class="ph ph-sun-horizon" aria-hidden="true"></i>Best: ${esc(t.season)}</span>
-       <span class="price">${priceText(t)}</span>
        <div class="tourFoot">
          <label class="cmpLabel"><input type="checkbox" class="cmp" value="${t.id}"> Compare</label>
          <div class="actions"><button class="btn btn-line btn-sm" type="button" data-detail="${t.id}">Itinerary</button><button class="btn btn-brand btn-sm" type="button" data-enquire="Tour package" data-dest="${esc(t.title)}">Enquire</button></div>
@@ -932,10 +1075,10 @@ function setRegion(r, scroll){
 function showTour(id){
   const t = TOURS.find(x => x.id === id); if (!t) return;
   $("#tourDlgBody").innerHTML = `
-   <div class="dlgHead"><div><p style="color:var(--muted);font-weight:600;font-size:14px">${t.region === "Northern" ? "Northern areas" : t.region}, ${t.days}</p><h2 id="tourTitle">${esc(t.title)}</h2></div><button class="close" type="button" data-close aria-label="Close"><i class="ph ph-x" aria-hidden="true"></i></button></div>
+   <div class="dlgHead"><div><p style="color:var(--muted);font-weight:600;font-size:14px">${esc(t.region)}, ${t.days}</p><h2 id="tourTitle">${esc(t.title)}</h2></div><button class="close" type="button" data-close aria-label="Close"><i class="ph ph-x" aria-hidden="true"></i></button></div>
    <img class="detailImg" src="${t.img}" alt="${esc(t.alt)}">
    <p style="color:var(--muted)">${esc(t.summary)}</p>
-   <p style="margin-top:12px;font-size:15px"><b>Best time:</b> ${esc(t.season)}<br><b>Starts from:</b> ${esc(t.start)}<br><b>Price:</b> ${priceText(t)}</p>
+   <p style="margin-top:12px;font-size:15px"><b>Best time:</b> ${esc(t.season)}<br><b>Starts from:</b> ${esc(t.start)}</p>
    <h3 style="margin-top:20px;font-size:19px">Sample plan</h3>
    <ol class="days">${t.plan.map(([d,txt]) => `<li><b>${esc(d)}</b><span>${esc(txt)}</span></li>`).join("")}</ol>
    <div class="incl"><div><b>Included</b><ul>${t.incl.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div><div><b>Not included</b><ul>${t.excl.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div></div>
@@ -954,7 +1097,7 @@ function compare(){
   if (!list.length){ box.innerHTML = `<p class="notice"><i class="ph ph-info" aria-hidden="true"></i><span>Tick at least one tour first.</span></p>`; return; }
   const row = (label, f) => `<tr><th scope="row">${label}</th>${list.map(t => `<td>${f(t)}</td>`).join("")}</tr>`;
   box.innerHTML = `<table class="cmpTable"><tr><th scope="row">Tour</th>${list.map(t=>`<td><b>${esc(t.title)}</b></td>`).join("")}</tr>
-    ${row("Length", t => t.days)}${row("Best time", t => esc(t.season))}${row("Starts from", t => esc(t.start))}${row("Price", t => priceText(t))}${row("Highlights", t => esc(t.summary))}</table>`;
+    ${row("Length", t => t.days)}${row("Best time", t => esc(t.season))}${row("Starts from", t => esc(t.start))}${row("Highlights", t => esc(t.summary))}</table>`;
 }
 
 /* Enquiry dialog */
@@ -987,6 +1130,7 @@ function updateSummary(){
   $("#sTransport").textContent = val("#bTransport");
   $("#sStay").textContent = val("#bStay");
   $("#sPlaces").textContent = places.join(", ") || "Choose places";
+  $("#sMeals").textContent = $$("#bMeals input:checked").map(x => x.value).join(", ") || "Not chosen";
   $("#sLength").textContent = `${val("#bDays") || "?"} days, ${val("#bGuests") || "?"} guests`;
   $("#sDate").textContent = val("#bDate") ? new Date(val("#bDate")).toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"}) : "Not chosen";
 }
@@ -996,7 +1140,7 @@ $("#builderForm").addEventListener("submit", e => {
   const places = $$("#bPlaces input:checked").map(x => x.value);
   openWA(WA_MAIN, ["Hello Discover Pakistan Tourism, I would like a custom trip plan.", "",
     "Starting from: " + val("#bStart"), "Style: " + val("#bFormat"), "Transport: " + val("#bTransport"), "Hotels: " + val("#bStay"),
-    "Places: " + (places.join(", ") || "Not sure yet"), "Date: " + (val("#bDate") || "Flexible"), "Days: " + val("#bDays"), "Guests: " + val("#bGuests"),
+    "Places: " + (places.join(", ") || "Not sure yet"), "Meals: " + ($$("#bMeals input:checked").map(x => x.value).join(", ") || "Not needed"), "Date: " + (val("#bDate") || "Flexible"), "Days: " + val("#bDays"), "Guests: " + val("#bGuests"),
     "Name: " + val("#bName"), "WhatsApp: " + val("#bPhone"), "Email: " + val("#bEmail"), "Notes: " + val("#bNotes")]);
 });
 
@@ -1005,7 +1149,7 @@ $("#quickPlan").addEventListener("submit", e => {
   e.preventDefault();
   openEnquiry(val("#qpService"), val("#qpDest"));
   if (val("#qpDate")) $("#eDate").value = val("#qpDate");
-  const g = val("#qpGuests"); $("#eGuests").value = g === "5+" ? "5 to 9" : g;
+  $("#eGuests").value = val("#qpGuests");
 });
 
 /* Tabs */
