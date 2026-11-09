@@ -725,7 +725,7 @@ dialog::backdrop{background:rgb(5 20 16 / .7)}
           <div class="field"><label for="bEmail">Email (optional)</label><input id="bEmail" type="email" autocomplete="email"></div>
           <div class="field span2"><label for="bNotes">Anything else?</label><textarea id="bNotes" rows="3" placeholder="Airport pickup, food preferences, travelling with children or elderly parents..."></textarea></div>
         </div>
-        <button class="btn btn-brand" type="submit" style="width:100%;margin-top:18px"><i class="ph ph-whatsapp-logo" aria-hidden="true"></i>Send my trip plan</button>
+        <button class="btn btn-brand" type="submit" style="width:100%;margin-top:18px"><i class="ph ph-paper-plane-tilt" aria-hidden="true"></i>Send my trip plan</button>
       </form>
       <aside class="summary" aria-live="polite">
         <h3>Your trip so far</h3>
@@ -892,7 +892,7 @@ dialog::backdrop{background:rgb(5 20 16 / .7)}
 <!-- Enquiry dialog -->
 <dialog id="enquiryDlg" aria-labelledby="enqTitle">
   <form class="dlg" id="enquiryForm" novalidate>
-    <div class="dlgHead"><div><h2 id="enqTitle">Plan my trip</h2><p style="color:var(--muted);font-size:15px;margin-top:6px">Tell us a little about your plans. We reply on WhatsApp.</p></div><button class="close" type="button" data-close aria-label="Close"><i class="ph ph-x" aria-hidden="true"></i></button></div>
+    <div class="dlgHead"><div><h2 id="enqTitle">Plan my trip</h2><p style="color:var(--muted);font-size:15px;margin-top:6px">Tell us a little about your plans. Our team will get back to you.</p></div><button class="close" type="button" data-close aria-label="Close"><i class="ph ph-x" aria-hidden="true"></i></button></div>
     <div class="grid2">
       <div class="field"><label for="eName">Your name</label><input id="eName" name="Name" autocomplete="name" required><span class="err">Please enter your name.</span></div>
       <div class="field"><label for="ePhone">WhatsApp number</label><input id="ePhone" name="Phone" type="tel" autocomplete="tel" placeholder="+92 300 1234567" required><span class="err">Please enter a number we can reach.</span></div>
@@ -905,8 +905,8 @@ dialog::backdrop{background:rgb(5 20 16 / .7)}
       <div class="hp" aria-hidden="true"><label for="eWebsite">Leave this empty</label><input id="eWebsite" name="website" tabindex="-1" autocomplete="off"></div>
       <div class="field span2"><label for="eMsg">Anything else?</label><textarea id="eMsg" name="Message" rows="3" placeholder="Pickup point, room needs, special requests"></textarea></div>
     </div>
-    <p class="notice"><i class="ph ph-info" aria-hidden="true"></i><span>Sending opens WhatsApp with your details filled in. Our team discusses your request and sends you a complete package with rates on WhatsApp or email. Nothing is booked until you confirm.</span></p>
-    <button class="btn btn-wa" type="submit" style="width:100%"><i class="ph ph-whatsapp-logo" aria-hidden="true"></i>Continue on WhatsApp</button>
+    <p class="notice"><i class="ph ph-info" aria-hidden="true"></i><span>Your request goes straight to our team. We discuss your request and sends you a complete package with rates on WhatsApp or email. Nothing is booked until you confirm.</span></p>
+    <button class="btn btn-wa" type="submit" style="width:100%"><i class="ph ph-paper-plane-tilt" aria-hidden="true"></i>Send enquiry</button>
   </form>
 </dialog>
 
@@ -1130,23 +1130,21 @@ function openEnquiry(service = "General enquiry", dest = ""){
   $$("dialog[open]").forEach(d => d.close());
   $("#enquiryDlg").showModal();
 }
-$("#enquiryForm").addEventListener("submit", e => {
+$("#enquiryForm").addEventListener("submit", async e => {
   e.preventDefault();
   let ok = true;
   ["#eName","#ePhone"].forEach(id => { const el = $(id), bad = !el.value.trim(); el.closest(".field").classList.toggle("invalid", bad); if (bad) ok = false; });
   if (!ok) { $("#enquiryForm .invalid input").focus(); return; }
   const d = new FormData(e.target), service = d.get("Service");
   const ref = newRef();
-  const lines = ["Hello Discover Pakistan Tourism, I would like to make an enquiry.", "Reference: " + ref, "", ...[...d.entries()].filter(([k,v]) => k !== "website" && String(v).trim()).map(([k,v]) => `${k}: ${v}`)];
-  openWA(service === "Hotel Felton enquiry" ? WA_FELTON : WA_MAIN, lines);
-  if (!d.get("website")) saveBooking({
+  const sent = await submitBooking(e.target.querySelector('[type="submit"]'), {
     ref, source: "enquiry", name: d.get("Name"), phone: d.get("Phone"), email: d.get("Email"), service,
     destination: d.get("Destination"), travel_date: d.get("Date"), guests: d.get("Guests"),
     travelling_from: d.get("From"), message: d.get("Message"), details: {}
-  });
+  }, !!d.get("website"));
+  if (!sent) return;
   $("#enquiryDlg").close();
   e.target.reset();
-  showToast(ref);
 });
 
 /* Builder */
@@ -1170,23 +1168,19 @@ function updateSummary(){
   $("#sDate").textContent = val("#bDate") ? new Date(val("#bDate")).toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"}) : "Not chosen";
 }
 $("#builderForm").addEventListener("input", updateSummary);
-$("#builderForm").addEventListener("submit", e => {
+$("#builderForm").addEventListener("submit", async e => {
   e.preventDefault();
   let ok = true;
   ["#bName","#bPhone"].forEach(id => { const el = $(id), bad = !el.value.trim(); el.closest(".field").classList.toggle("invalid", bad); if (bad) ok = false; });
   if (!ok) { $("#builderForm .invalid input").focus(); return; }
   const places = getPlaces(), meals = $$("#bMeals input:checked").map(x => x.value), ref = newRef();
-  if (!val("#bWebsite")) saveBooking({
+  const sent = await submitBooking(e.target.querySelector('[type="submit"]'), {
     ref, source: "trip_builder", name: val("#bName"), phone: val("#bPhone"), email: val("#bEmail"),
     service: "Custom trip: " + val("#bFormat"), destination: places.join(", "), travel_date: val("#bDate"),
     guests: val("#bGuests"), travelling_from: val("#bStart"), message: val("#bNotes"),
     details: { start: val("#bStart"), style: val("#bFormat"), transport: val("#bTransport"), hotels: val("#bStay"), places, meals, days: val("#bDays") }
-  });
-  setTimeout(() => showToast(ref), 0);
-  openWA(WA_MAIN, ["Hello Discover Pakistan Tourism, I would like a custom trip plan.", "Reference: " + ref, "",
-    "Starting from: " + val("#bStart"), "Style: " + val("#bFormat"), "Transport: " + val("#bTransport"), "Hotels: " + val("#bStay"),
-    "Places: " + (places.join(", ") || "Not sure yet"), "Meals: " + ($$("#bMeals input:checked").map(x => x.value).join(", ") || "Not needed"), "Date: " + (val("#bDate") || "Flexible"), "Days: " + val("#bDays"), "Guests: " + val("#bGuests"),
-    "Name: " + val("#bName"), "WhatsApp: " + val("#bPhone"), "Email: " + val("#bEmail"), "Notes: " + val("#bNotes")]);
+  }, !!val("#bWebsite"));
+  if (sent) ["#bName","#bPhone","#bEmail","#bNotes"].forEach(id => $(id).value = "");
 });
 
 /* Quick planner */
@@ -1250,7 +1244,7 @@ function newRef(){
 }
 const clip = (v, n) => { v = (v == null ? "" : String(v)).trim(); return v ? v.slice(0, n) : null; };
 async function saveBooking(b){
-  if (!API) return false;
+  if (!API) return null;
   const row = {
     ref: b.ref, source: b.source, name: clip(b.name, 120), phone: clip(b.phone, 40), email: clip(b.email, 200),
     service: clip(b.service, 80), destination: clip(b.destination, 400),
@@ -1258,17 +1252,32 @@ async function saveBooking(b){
     guests: clip(b.guests, 40), travelling_from: clip(b.travelling_from, 120), message: clip(b.message, 3000), details: b.details || {}
   };
   try {
-    // Sent as text/plain with keepalive so the booking still arrives while WhatsApp opens.
-    const res = await fetch(API + "/api/bookings", { method: "POST", headers: { "Content-Type": "text/plain;charset=UTF-8" }, body: JSON.stringify(row), keepalive: true, mode: "cors" });
-    if (!res.ok) console.warn("Booking not saved", res.status);
-    return res.ok;
-  } catch (err) { console.warn("Booking not saved", err); return false; }
+    // Sent as text/plain so the browser does not need a CORS pre-check.
+    const res = await fetch(API + "/api/bookings", { method: "POST", headers: { "Content-Type": "text/plain;charset=UTF-8" }, body: JSON.stringify(row), mode: "cors" });
+    if (!res.ok) { console.warn("Booking not saved", res.status); return null; }
+    const out = await res.json().catch(() => ({}));
+    return out.ref || b.ref;
+  } catch (err) { console.warn("Booking not saved", err); return null; }
+}
+/* Send a booking to the backend, with a busy button and a clear result message. */
+async function submitBooking(btn, booking, isSpam){
+  const label = btn.innerHTML;
+  btn.disabled = true; btn.innerHTML = '<i class="ph ph-spinner" aria-hidden="true"></i>Sending...';
+  const ref = isSpam ? booking.ref : await saveBooking(booking);
+  btn.disabled = false; btn.innerHTML = label;
+  if (ref) showToast(ref); else showFailToast();
+  return !!ref;
 }
 let toastTimer;
 function showToast(ref){
   const t = $("#toast");
-  t.innerHTML = `<i class="ph ph-check-circle" aria-hidden="true" style="font-size:22px;color:var(--accent)"></i><span>Thank you. Your reference is <b>${esc(ref)}</b>. Please press send in WhatsApp, and our team will reply with your package.</span>`;
-  t.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(() => t.hidden = true, 12000);
+  t.innerHTML = `<i class="ph ph-check-circle" aria-hidden="true" style="font-size:22px;color:var(--accent)"></i><span>Thank you, your request has been received. Your reference is <b>${esc(ref)}</b>. Our team will contact you shortly with your package.</span>`;
+  t.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(() => t.hidden = true, 15000);
+}
+function showFailToast(){
+  const t = $("#toast");
+  t.innerHTML = `<i class="ph ph-warning-circle" aria-hidden="true" style="font-size:22px;color:var(--accent)"></i><span>Sorry, we could not send your request right now. Please try again in a minute, or call us on <a href="tel:+923005390720" style="color:inherit;text-decoration:underline">0300-5390720</a>.</span>`;
+  t.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(() => t.hidden = true, 15000);
 }
 const safeImg = u => /^https:\/\//.test(u || "") ? u : "";
 function revealNow(root){ $$(".reveal", root).forEach(el => el.classList.add("in")); }
