@@ -385,7 +385,11 @@ dialog::backdrop{background:rgb(5 20 16 / .7)}
 .corpNote{padding:20px 22px;border-radius:var(--radius);background:var(--brand);color:var(--on-brand)}
 .corpNote b{color:var(--accent);display:block;font-size:15.5px;margin-bottom:6px}
 .corpNote p{color:var(--on-brand-muted);font-size:15px}
-.industries{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+.industries{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px}
+.corpTag{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:8px 14px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:15px}
+.industry.industryOffer{background:var(--brand);border-color:var(--brand);color:var(--on-brand)}
+.industry.industryOffer p{color:var(--on-brand-muted)}
+.industry.industryOffer i.ph{color:var(--accent)}
 .industry{padding:20px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
 .industry i.ph{font-size:30px;color:var(--accent-text)}
 .industry h3{font-size:18px;margin:10px 0 6px}
@@ -625,7 +629,8 @@ dialog::backdrop{background:rgb(5 20 16 / .7)}
       <div class="reveal">
         <p class="corpKicker">For companies</p>
         <h2>Corporate tours and company trips</h2>
-        <p class="lead">We plan company trips for pharmaceutical and medical companies, pesticide, seed and fertilizer companies, and other large businesses: annual trips, sales conferences, dealer tours and team retreats. Transport, hotels, meeting space and meals come as one package, with one person from our team handling it from start to finish.</p>
+        <p class="corpTag"><i class="ph ph-seal-percent" aria-hidden="true"></i>Special discount offers for companies and other large groups</p>
+        <p class="lead">We plan company trips for pharmaceutical and medical companies, cosmetics and beauty brands, pesticide, seed and fertilizer companies, and other large businesses: annual trips, sales conferences, dealer tours and team retreats. Transport, hotels, meeting space and meals come as one package, with one person from our team handling it from start to finish.</p>
       </div>
       <div class="corpNote reveal">
         <b>A written quotation before anything is booked</b>
@@ -634,9 +639,11 @@ dialog::backdrop{background:rgb(5 20 16 / .7)}
     </div>
     <div class="industries">
       <article class="industry reveal"><i class="ph ph-first-aid-kit" aria-hidden="true"></i><h3>Pharmaceutical and medical companies</h3><p>Annual trips for field forces, sales conferences, launch meetings and team retreats.</p></article>
+      <article class="industry reveal"><i class="ph ph-sparkle" aria-hidden="true"></i><h3>Cosmetics and beauty companies</h3><p>Sales team trips, salon and distributor reward tours, product launches and brand events.</p></article>
       <article class="industry reveal"><i class="ph ph-plant" aria-hidden="true"></i><h3>Pesticide, seed and fertilizer companies</h3><p>Dealer and distributor reward tours and territory sales meetings for groups from across Punjab and Sindh.</p></article>
       <article class="industry reveal"><i class="ph ph-buildings" aria-hidden="true"></i><h3>Banks, telecom and FMCG</h3><p>Regional team trips, top-performer incentive tours and leadership offsites.</p></article>
       <article class="industry reveal"><i class="ph ph-factory" aria-hidden="true"></i><h3>Industry, NGOs and other organisations</h3><p>Staff family trips, board retreats and field visits, planned around your policies.</p></article>
+      <article class="industry industryOffer reveal"><i class="ph ph-seal-percent" aria-hidden="true"></i><h3>Special discounts for companies and large groups</h3><p>Ask about our special discount offers for corporate groups and other large groups. Details are shared with your quotation.</p><button class="btn btn-accent btn-sm" type="button" data-enquire="Corporate tour" style="margin-top:12px">Ask about discounts</button></article>
     </div>
     <ul class="corpServices reveal">
       <li><i class="ph ph-van" aria-hidden="true"></i><span><b>Group transport.</b> Coasters, buses, Hiace vans and executive cars with experienced drivers.</span></li>
